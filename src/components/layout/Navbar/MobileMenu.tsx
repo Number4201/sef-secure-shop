@@ -17,11 +17,11 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onLinkClick }) => {
   return (
     <div 
       className={cn(
-        "fixed inset-x-0 z-50 bg-white transition-all duration-200 ease-in-out",
-        isOpen ? "top-16 max-h-[80vh]" : "-top-[100vh]"
+        "fixed inset-x-0 z-50 bg-white transition-all duration-300 ease-in-out",
+        isOpen ? "top-16 bottom-0" : "-top-[100vh]"
       )}
     >
-      <ScrollArea className="max-h-[calc(100vh-4rem)]">
+      <ScrollArea className="h-[calc(100vh-4rem)]">
         <div className="p-4">
           {/* Mobile search */}
           <div className="mb-4">
@@ -40,19 +40,19 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onLinkClick }) => {
             </div>
           </div>
           
-          {/* Navigation links */}
-          <nav className="flex flex-col">
+          {/* Navigation links - simplified */}
+          <nav className="flex flex-col space-y-1">
             <Link 
               to="/" 
-              className="px-3 py-3 border-b hover:bg-gray-100 rounded-md mb-1"
+              className="px-3 py-3 hover:bg-gray-100 rounded-md"
               onClick={onLinkClick}
             >
               Domů
             </Link>
             
             {/* Products section */}
-            <div className="mb-2">
-              <div className="px-3 py-3 font-medium">Produkty</div>
+            <div className="mb-1">
+              <div className="px-3 py-2 font-medium">Produkty</div>
               <div className="pl-3 space-y-1">
                 {categories.map((category) => (
                   <Link 
@@ -69,14 +69,14 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onLinkClick }) => {
             
             <Link 
               to="/o-nas" 
-              className="px-3 py-3 border-b hover:bg-gray-100 rounded-md mb-1"
+              className="px-3 py-3 hover:bg-gray-100 rounded-md"
               onClick={onLinkClick}
             >
               O nás
             </Link>
             <Link 
               to="/kontakt" 
-              className="px-3 py-3 border-b hover:bg-gray-100 rounded-md mb-1"
+              className="px-3 py-3 hover:bg-gray-100 rounded-md"
               onClick={onLinkClick}
             >
               Kontakt

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Menu, Search, User } from 'lucide-react';
+import { Menu, Search } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import NavLinks from './Navbar/NavLinks';
 import SearchBar from './Navbar/SearchBar';
@@ -26,7 +26,16 @@ const Navbar: React.FC = () => {
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+    // Lock body scroll when menu is open
+    document.body.style.overflow = !isMobileMenuOpen ? 'hidden' : '';
   };
+
+  // Clean up scroll lock when component unmounts
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
 
   const toggleSearch = () => {
     setIsSearchOpen(!isSearchOpen);
@@ -98,7 +107,10 @@ const Navbar: React.FC = () => {
       {/* Mobile menu */}
       <MobileMenu 
         isOpen={isMobileMenuOpen} 
-        onLinkClick={() => setIsMobileMenuOpen(false)} 
+        onLinkClick={() => {
+          setIsMobileMenuOpen(false);
+          document.body.style.overflow = '';
+        }} 
       />
     </header>
   );

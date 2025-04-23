@@ -20,9 +20,9 @@ const PageLoader = () => (
 
 function App() {
   return (
-    <div className="overflow-hidden w-full max-w-[100vw]">
-      <Router>
-        <CartProvider>
+    <Router>
+      <CartProvider>
+        <div className="overflow-hidden w-full max-w-[100vw]">
           <Suspense fallback={<PageLoader />}>
             <Routes>
               <Route path="/" element={<IndexPage />} />
@@ -33,9 +33,9 @@ function App() {
             </Routes>
           </Suspense>
           <Toaster />
-        </CartProvider>
-      </Router>
-    </div>
+        </div>
+      </CartProvider>
+    </Router>
   );
 }
 

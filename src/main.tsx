@@ -4,7 +4,7 @@ import { StrictMode } from 'react'
 import App from './App.tsx'
 import './index.css'
 
-// Set up viewport-fit to prevent scrolling issues
+// Set up viewport-fit with maximum-scale and user-scalable=no to prevent zooming/scrolling issues
 const meta = document.createElement('meta');
 meta.name = 'viewport';
 meta.content = 'width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no';
