@@ -29,7 +29,7 @@ const ContactButton: React.FC = () => {
               </span>
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent className="sm:max-w-[425px] bg-white">
             <DialogHeader>
               <DialogTitle className="text-2xl text-center mb-4">Kontaktní informace</DialogTitle>
               <DialogDescription className="text-center">

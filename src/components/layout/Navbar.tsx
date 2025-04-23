@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Menu, Search } from 'lucide-react';
+import { Menu, Search, PhoneCall, Mail } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import NavLinks from './Navbar/NavLinks';
 import SearchBar from './Navbar/SearchBar';
@@ -42,21 +42,25 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <header className={`sticky top-0 z-50 w-full border-b transition-shadow duration-300 ${
+    <header className={`sticky top-0 z-50 w-full transition-shadow duration-300 ${
       isScrolled ? 'shadow-md' : 'shadow-sm'
     }`}>
       {/* Top bar with contact info */}
-      {!isMobile && (
-        <div className="flex justify-end items-center h-8 px-4 bg-esejfy-burgundy text-white text-xs">
-          <div className="container mx-auto flex justify-end items-center space-x-4">
+      <div className="flex justify-end items-center h-10 px-4 bg-esejfy-burgundy text-white text-sm">
+        <div className="container mx-auto flex justify-end items-center space-x-4">
+          <a href="mailto:info@esejfy.net" className="flex items-center gap-1 hover:underline">
+            <Mail size={16} />
             <span>info@esejfy.net</span>
+          </a>
+          <a href="tel:+420123456789" className="flex items-center gap-1 hover:underline">
+            <PhoneCall size={16} />
             <span>+420 123 456 789</span>
-          </div>
+          </a>
         </div>
-      )}
+      </div>
 
       {/* Main navbar */}
-      <div className="bg-esejfy-dark-primary">
+      <div className="bg-esejfy-dark-primary border-b border-esejfy-dark-secondary">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}

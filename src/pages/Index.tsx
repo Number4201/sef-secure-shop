@@ -7,7 +7,6 @@ import ProductGrid from '@/components/products/ProductGrid';
 import FeaturesSection from '@/components/home/FeaturesSection';
 import TestimonialSection from '@/components/home/TestimonialSection';
 import CallToAction from '@/components/home/CallToAction';
-import ContactButton from '@/components/ui/ContactButton';
 import { getFeaturedProducts } from '@/data/products';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -49,7 +48,6 @@ const Index = () => {
     <Layout>
       <div className="overflow-hidden w-full bg-esejfy-dark-primary text-white">
         <HeroSection />
-        {!isMobile && <ContactButton />}
         <CategorySection />
         <FeaturedProductsSection />
         <FeaturesSection />
