@@ -68,10 +68,10 @@ export default {
 					lightgray: '#2A2F3C', // Darker light gray
 					blue: '#3C6E91',
 					dark: {
-						primary: '#1A1F2C',
-						secondary: '#2A2F3C',
-						accent: '#403E43',
-					}
+            primary: '#0D0D14',     // Darker primary background
+            secondary: '#1A1F2C',   // Dark secondary background
+            accent: '#2A2F3C',      // Dark accent color
+          }
 				}
 			},
 			borderRadius: {
