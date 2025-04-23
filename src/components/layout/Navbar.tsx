@@ -2,23 +2,15 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import {
-  ShoppingCart,
-  Menu,
-  Search,
-  User
-} from 'lucide-react';
-import { useCart } from '@/hooks/use-cart';
-import CartDrawer from '@/components/cart/CartDrawer';
+import { Menu, Search, User } from 'lucide-react';
 import NavLinks from './Navbar/NavLinks';
 import SearchBar from './Navbar/SearchBar';
 import MobileMenu from './Navbar/MobileMenu';
+import CartButton from './Navbar/CartButton';
 
 const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const { getTotalItems } = useCart();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -26,10 +18,6 @@ const Navbar: React.FC = () => {
 
   const toggleSearch = () => {
     setIsSearchOpen(!isSearchOpen);
-  };
-
-  const toggleCart = () => {
-    setIsCartOpen(!isCartOpen);
   };
 
   return (
@@ -76,18 +64,7 @@ const Navbar: React.FC = () => {
             >
               <User size={20} />
             </Button>
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              onClick={toggleCart}
-              className="hover:bg-esejfy-lightgray relative"
-              aria-label="Košík"
-            >
-              <ShoppingCart size={20} />
-              <span className="absolute top-0 right-0 bg-esejfy-burgundy text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                {getTotalItems()}
-              </span>
-            </Button>
+            <CartButton />
             
             {/* Mobile menu button */}
             <Button 
@@ -111,9 +88,6 @@ const Navbar: React.FC = () => {
         isOpen={isMobileMenuOpen} 
         onLinkClick={() => setIsMobileMenuOpen(false)} 
       />
-
-      {/* Cart Drawer */}
-      <CartDrawer open={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </header>
   );
 };

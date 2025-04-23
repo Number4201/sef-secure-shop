@@ -9,22 +9,19 @@ const CartButton = () => {
   const { getTotalItems } = useCart();
   const [isCartOpen, setIsCartOpen] = useState(false);
   
-  const itemCount = getTotalItems();
-  
   return (
     <>
-      <Button
-        variant="ghost"
-        className="relative"
+      <Button 
+        variant="ghost" 
+        size="icon" 
         onClick={() => setIsCartOpen(true)}
-        aria-label="Otevřít košík"
+        className="hover:bg-esejfy-lightgray relative"
+        aria-label="Košík"
       >
-        <ShoppingCart className="h-[1.2rem] w-[1.2rem]" />
-        {itemCount > 0 && (
-          <span className="absolute -top-1 -right-1 bg-esejfy-burgundy text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-            {itemCount}
-          </span>
-        )}
+        <ShoppingCart size={20} />
+        <span className="absolute top-0 right-0 bg-esejfy-burgundy text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+          {getTotalItems()}
+        </span>
       </Button>
       
       <CartDrawer open={isCartOpen} onClose={() => setIsCartOpen(false)} />
