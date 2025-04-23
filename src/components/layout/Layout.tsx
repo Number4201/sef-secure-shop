@@ -12,9 +12,9 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen max-w-full overflow-x-hidden">
       <Navbar />
-      <main className="flex-grow">{children}</main>
+      <main className="flex-grow max-w-full overflow-x-hidden">{children}</main>
       <Suspense fallback={<div className="h-64 bg-esejfy-gray/10"></div>}>
         <Footer />
       </Suspense>

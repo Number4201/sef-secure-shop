@@ -20,20 +20,22 @@ const PageLoader = () => (
 
 function App() {
   return (
-    <Router>
-      <CartProvider>
-        <Suspense fallback={<PageLoader />}>
-          <Routes>
-            <Route path="/" element={<IndexPage />} />
-            <Route path="/products" element={<ProductsPage />} />
-            <Route path="/product/:slug" element={<ProductDetailPage />} />
-            <Route path="/cart" element={<CartPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </Suspense>
-        <Toaster />
-      </CartProvider>
-    </Router>
+    <div className="overflow-x-hidden w-full max-w-[100vw]">
+      <Router>
+        <CartProvider>
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              <Route path="/" element={<IndexPage />} />
+              <Route path="/products" element={<ProductsPage />} />
+              <Route path="/product/:slug" element={<ProductDetailPage />} />
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </Suspense>
+          <Toaster />
+        </CartProvider>
+      </Router>
+    </div>
   );
 }
 

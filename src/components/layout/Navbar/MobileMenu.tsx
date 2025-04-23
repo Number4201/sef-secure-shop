@@ -13,11 +13,11 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onLinkClick }) => {
   return (
     <div 
       className={cn(
-        "lg:hidden overflow-hidden transition-all duration-300 ease-in-out",
-        isOpen ? "max-h-96" : "max-h-0"
+        "fixed lg:hidden inset-x-0 z-50 bg-white shadow-lg transition-all duration-300 ease-in-out",
+        isOpen ? "top-16 max-h-[80vh] overflow-y-auto" : "-top-[100vh]"
       )}
     >
-      <nav className="flex flex-col bg-white shadow-lg">
+      <nav className="flex flex-col">
         <Link 
           to="/" 
           className="px-5 py-3 border-b hover:bg-esejfy-lightgray"
@@ -28,7 +28,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onLinkClick }) => {
         <div className="px-5 py-3 border-b hover:bg-esejfy-lightgray">
           <details>
             <summary className="cursor-pointer">Produkty</summary>
-            <div className="pl-4 mt-2 space-y-1">
+            <div className="pl-4 mt-2 space-y-1 mb-2">
               {categories.map((category) => (
                 <Link 
                   key={category.path}
