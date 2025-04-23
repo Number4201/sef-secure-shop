@@ -17,10 +17,14 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
+import { useCart } from '@/hooks/use-cart';
+import CartDrawer from '@/components/cart/CartDrawer';
 
 const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const { getTotalItems } = useCart();
 
   const categories = [
     { name: 'Nábytkové trezory', path: '/products?category=nabytkove-trezory' },
@@ -38,6 +42,10 @@ const Navbar: React.FC = () => {
 
   const toggleSearch = () => {
     setIsSearchOpen(!isSearchOpen);
+  };
+
+  const toggleCart = () => {
+    setIsCartOpen(!isCartOpen);
   };
 
   return (
@@ -113,12 +121,13 @@ const Navbar: React.FC = () => {
             <Button 
               variant="ghost" 
               size="icon" 
+              onClick={toggleCart}
               className="hover:bg-esejfy-lightgray relative"
               aria-label="Košík"
             >
               <ShoppingCart size={20} />
               <span className="absolute top-0 right-0 bg-esejfy-burgundy text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                0
+                {getTotalItems()}
               </span>
             </Button>
             
@@ -202,6 +211,9 @@ const Navbar: React.FC = () => {
           </Link>
         </nav>
       </div>
+
+      {/* Cart Drawer */}
+      <CartDrawer open={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </header>
   );
 };
