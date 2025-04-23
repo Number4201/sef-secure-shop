@@ -1,25 +1,24 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
-	darkMode: ["class"],
-	content: [
-		"./pages/**/*.{ts,tsx}",
-		"./components/**/*.{ts,tsx}",
-		"./app/**/*.{ts,tsx}",
-		"./src/**/*.{ts,tsx}",
-	],
-	prefix: "",
-	theme: {
-		container: {
-			center: true,
-			padding: '2rem',
-			screens: {
-				'2xl': '1400px'
-			}
-		},
-		extend: {
-			colors: {
+  darkMode: ["class"],
+  content: [
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
+  prefix: "",
+  theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
+    extend: {
+      colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
@@ -65,9 +64,14 @@ export default {
 				},
 				esejfy: {
 					burgundy: '#8A1538',
-					gray: '#58585B',
-					lightgray: '#F5F5F7',
+					gray: '#1A1F2C',  // Darker gray
+					lightgray: '#2A2F3C', // Darker light gray
 					blue: '#3C6E91',
+					dark: {
+						primary: '#1A1F2C',
+						secondary: '#2A2F3C',
+						accent: '#403E43',
+					}
 				}
 			},
 			borderRadius: {

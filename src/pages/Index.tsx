@@ -47,7 +47,7 @@ const Index = () => {
   
   return (
     <Layout>
-      <div className="overflow-hidden w-full">
+      <div className="overflow-hidden w-full bg-esejfy-dark-primary text-white">
         <HeroSection />
         {!isMobile && <ContactButton />}
         <CategorySection />
