@@ -40,23 +40,23 @@ const categories: CategoryProps[] = [
 
 const CategoryCard: React.FC<CategoryProps> = ({ title, description, image, link }) => {
   return (
-    <Card className="overflow-hidden border-none product-card">
+    <Card className="overflow-hidden border-none product-card group rounded-xl shadow-lg">
       <Link to={link} className="block h-full">
-        <div className="relative h-48">
+        <div className="relative h-56">
           <img 
             src={image} 
             alt={title}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-          <div className="absolute bottom-0 left-0 p-4 text-white">
-            <h3 className="font-bold text-lg">{title}</h3>
-            <p className="text-sm opacity-90">{description}</p>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+          <div className="absolute bottom-0 left-0 p-5 text-white">
+            <h3 className="font-bold text-xl">{title}</h3>
+            <p className="text-base opacity-90">{description}</p>
           </div>
         </div>
         <CardContent className="p-4 bg-esejfy-burgundy text-white flex justify-between items-center">
-          <span className="font-medium text-sm">Zobrazit kategorii</span>
-          <ArrowRight size={16} />
+          <span className="font-medium">Zobrazit kategorii</span>
+          <ArrowRight size={16} className="transform transition-transform duration-300 group-hover:translate-x-1" />
         </CardContent>
       </Link>
     </Card>
@@ -65,16 +65,16 @@ const CategoryCard: React.FC<CategoryProps> = ({ title, description, image, link
 
 const CategorySection: React.FC = () => {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-24 bg-white">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Naše kategorie</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+        <div className="text-center mb-14">
+          <h2 className="text-4xl font-bold mb-4">Naše kategorie</h2>
+          <p className="text-gray-600 text-lg max-w-3xl mx-auto">
             Objevte naši širokou nabídku kvalitních trezorů a sejfů pro různé potřeby a účely
           </p>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {categories.map((category, index) => (
             <CategoryCard key={index} {...category} />
           ))}

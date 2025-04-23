@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -119,15 +120,19 @@ export default {
 						opacity: '1'
 					}
 				},
-				'glow': {
-          '0%, 100%': {
-            opacity: '0.4',
+				'slow-glow': {
+          '0%': {
+            opacity: '0.3',
             transform: 'scale(1)',
           },
           '50%': {
-            opacity: '0.6',
-            transform: 'scale(1.05)',
+            opacity: '0.5',
+            transform: 'scale(1.08)',
           },
+          '100%': {
+            opacity: '0.3',
+            transform: 'scale(1)',
+          }
         },
 			},
 			animation: {
@@ -136,6 +141,7 @@ export default {
 				'fade-in': 'fade-in 0.3s ease-out',
 				'fade-out': 'fade-out 0.3s ease-out',
 				'slide-in': 'slide-in 0.3s ease-out',
+				'slow-glow': 'slow-glow 5s ease-in-out infinite',
 			}
 		}
 	},

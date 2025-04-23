@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Layout from '@/components/layout/Layout';
 import HeroSection from '@/components/home/HeroSection';
@@ -20,7 +21,7 @@ const Index = () => {
       
       <div className="fixed bottom-8 right-8 z-50">
         <div className="relative">
-          <div className="absolute inset-0 bg-[#ea384c] rounded-full blur-lg opacity-70 animate-[glow_3s_ease-in-out_infinite]" />
+          <div className="absolute inset-0 bg-[#ea384c] rounded-full blur-xl opacity-70 animate-slow-glow" />
           <Dialog>
             <DialogTrigger asChild>
               <Button 
@@ -97,21 +98,21 @@ const Index = () => {
       
       <CategorySection />
       
-      <section className="py-16 bg-white">
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Nejprodávanější produkty</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <h2 className="text-4xl font-bold mb-4">Nejprodávanější produkty</h2>
+            <p className="text-gray-600 text-lg max-w-3xl mx-auto">
               Objevte naše nejoblíbenější trezory a sejfy, které si naši zákazníci vybírají nejčastěji
             </p>
           </div>
           
           <ProductGrid products={featuredProducts} />
           
-          <div className="text-center mt-10">
+          <div className="text-center mt-12">
             <a 
               href="/products" 
-              className="inline-flex items-center text-esejfy-burgundy hover:text-esejfy-burgundy/80 font-medium animated-underline"
+              className="inline-flex items-center text-lg text-esejfy-burgundy hover:text-esejfy-burgundy/80 font-medium animated-underline"
             >
               Zobrazit všechny produkty
             </a>
