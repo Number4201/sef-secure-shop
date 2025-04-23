@@ -53,7 +53,7 @@ interface BreadcrumbLinkProps extends React.ComponentPropsWithoutRef<typeof Link
 const BreadcrumbLink = React.forwardRef<HTMLAnchorElement, BreadcrumbLinkProps>(
   ({ className, href, to, isCurrentPage = false, children, ...props }, ref) => {
     // Use href as to if to is not provided
-    const linkTo = to || href || "";
+    const linkTo = to || href || "/";
     
     if (isCurrentPage) {
       return (

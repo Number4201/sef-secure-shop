@@ -81,16 +81,16 @@ const Products = () => {
           {/* Breadcrumbs */}
           <Breadcrumb>
             <BreadcrumbItem>
-              <BreadcrumbLink href="/">Domů</BreadcrumbLink>
+              <BreadcrumbLink to="/">Domů</BreadcrumbLink>
             </BreadcrumbItem>
             {categoryParam ? (
               <>
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="/products">Produkty</BreadcrumbLink>
+                  <BreadcrumbLink to="/products">Produkty</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbItem>
                   <BreadcrumbLink 
-                    href={`/products?category=${categoryParam}`}
+                    to={`/products?category=${categoryParam}`}
                     isCurrentPage
                   >
                     {categoryNames[categoryParam] || 'Kategorie'}
@@ -99,7 +99,7 @@ const Products = () => {
               </>
             ) : (
               <BreadcrumbItem>
-                <BreadcrumbLink href="/products" isCurrentPage>
+                <BreadcrumbLink to="/products" isCurrentPage>
                   Produkty
                 </BreadcrumbLink>
               </BreadcrumbItem>

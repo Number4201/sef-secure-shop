@@ -99,15 +99,15 @@ const ProductDetail: React.FC = () => {
       {/* Breadcrumb navigation */}
       <Breadcrumb className="mb-6">
         <BreadcrumbItem>
-          <BreadcrumbLink href="/">Domů</BreadcrumbLink>
+          <BreadcrumbLink to="/">Domů</BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbItem>
-          <BreadcrumbLink href={`/products?category=${product.category}`}>
+          <BreadcrumbLink to={`/products?category=${product.category}`}>
             {categoryNames[product.category] || product.category}
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbItem>
-          <BreadcrumbLink href={`/product/${product.slug}`} isCurrentPage>
+          <BreadcrumbLink to={`/product/${product.slug}`} isCurrentPage>
             {product.name}
           </BreadcrumbLink>
         </BreadcrumbItem>
