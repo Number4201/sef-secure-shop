@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { ShieldCheck, Flame, Package, Truck, MinusCircle, PlusCircle } from 'lucide-react';
 import { Product } from '@/types/product';
 import { useToast } from '@/hooks/use-toast';
+import { useCart } from '@/hooks/use-cart';
 
 interface ProductInfoProps {
   product: Product;
@@ -13,6 +14,7 @@ interface ProductInfoProps {
 const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
   const [quantity, setQuantity] = React.useState(1);
   const { toast } = useToast();
+  const { addItem } = useCart();
 
   const formattedPrice = new Intl.NumberFormat('cs-CZ', { 
     style: 'currency', 
@@ -32,10 +34,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
   const decreaseQuantity = () => setQuantity(q => (q > 1 ? q - 1 : 1));
 
   const handleAddToCart = () => {
-    toast({
-      title: "Přidáno do košíku",
-      description: `Produkt ${product.name} byl přidán do košíku v počtu ${quantity} ks.`
-    });
+    addItem(product, quantity);
   };
 
   return (

@@ -19,10 +19,10 @@ const CallToAction: React.FC = () => {
           </div>
           <div className="flex flex-col sm:flex-row gap-4">
             <Button asChild size="lg" className="bg-white text-esejfy-burgundy hover:bg-white/90">
-              <Link to="/kontakt" className="flex items-center gap-2">
+              <a href="/kontakt" className="flex items-center gap-2">
                 <PhoneCall size={18} />
                 <span>Kontaktujte nás</span>
-              </Link>
+              </a>
             </Button>
             <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
               <Link to="/products">
