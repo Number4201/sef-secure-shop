@@ -10,6 +10,7 @@ import { ShoppingCart } from 'lucide-react';
 import { useCart } from '@/hooks/use-cart';
 import EmptyCartDrawer from './EmptyCartDrawer';
 import CartDrawerContent from './CartDrawerContent';
+import { cn } from '@/lib/utils';
 
 interface CartDrawerProps {
   open: boolean;
@@ -33,9 +34,14 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose }) => {
 
   return (
     <Sheet open={open} onOpenChange={onClose}>
-      <SheetContent className="flex flex-col h-full w-full sm:max-w-lg p-0">
-        <SheetHeader className="px-6 py-4 border-b">
-          <SheetTitle className="flex items-center gap-2">
+      <SheetContent 
+        className={cn(
+          "flex flex-col h-full w-full sm:max-w-lg p-0",
+          "bg-esejfy-gray text-white border-l border-white/10"
+        )}
+      >
+        <SheetHeader className="px-6 py-4 border-b border-white/10">
+          <SheetTitle className="flex items-center gap-2 text-white">
             <ShoppingCart size={20} />
             <span>Košík ({totalItems})</span>
           </SheetTitle>

@@ -3,28 +3,21 @@ import React from 'react';
 import { MinusCircle, PlusCircle, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { CartItem as CartItemType } from '@/types/cart';
+import { cn } from '@/lib/utils';
 
 interface CartItemProps {
   item: CartItemType;
   updateQuantity: (id: string, quantity: number) => void;
   removeItem: (id: string) => void;
+  formatPrice: (price: number) => string;
 }
 
-const CartItem: React.FC<CartItemProps> = ({ item, updateQuantity, removeItem }) => {
-  const formattedPrice = new Intl.NumberFormat('cs-CZ', { 
-    style: 'currency', 
-    currency: 'CZK',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0 
-  }).format(item.price);
-
-  const formattedTotal = new Intl.NumberFormat('cs-CZ', { 
-    style: 'currency', 
-    currency: 'CZK',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0 
-  }).format(item.price * item.quantity);
-
+const CartItem: React.FC<CartItemProps> = ({ 
+  item, 
+  updateQuantity, 
+  removeItem,
+  formatPrice
+}) => {
   const increaseQuantity = () => updateQuantity(item.id, item.quantity + 1);
   const decreaseQuantity = () => {
     if (item.quantity > 1) {
@@ -33,18 +26,26 @@ const CartItem: React.FC<CartItemProps> = ({ item, updateQuantity, removeItem })
   };
 
   return (
-    <div className="flex flex-col sm:flex-row gap-4 py-4 border-b border-gray-200">
-      <div className="sm:w-24 h-24 relative overflow-hidden rounded">
-        <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+    <div className={cn(
+      "flex items-start gap-4 py-4",
+      "border-b border-white/10 last:border-none"
+    )}>
+      <div className="w-20 h-20 overflow-hidden rounded-lg border border-white/10">
+        <img 
+          src={item.image} 
+          alt={item.name} 
+          className="w-full h-full object-cover"
+        />
       </div>
-      <div className="flex flex-col sm:flex-row flex-1 gap-4 justify-between">
-        <div className="flex-1">
-          <h3 className="font-medium text-base">{item.name}</h3>
-          <p className="text-sm text-gray-500 mt-1">Jednotková cena: {formattedPrice}</p>
-        </div>
+      
+      <div className="flex-1 min-w-0">
+        <h3 className="font-medium text-base truncate">{item.name}</h3>
+        <p className="text-sm text-gray-400 mt-1">
+          {formatPrice(item.price)} / ks
+        </p>
         
-        <div className="flex gap-6 items-center">
-          <div className="flex items-center border rounded-md">
+        <div className="flex items-center justify-between mt-3">
+          <div className="flex items-center border border-white/10 rounded-md bg-white/5">
             <Button
               type="button"
               variant="ghost"
@@ -52,37 +53,39 @@ const CartItem: React.FC<CartItemProps> = ({ item, updateQuantity, removeItem })
               onClick={decreaseQuantity}
               disabled={item.quantity <= 1}
               aria-label="Snížit množství"
-              className="h-8 w-8"
+              className="h-8 w-8 hover:bg-white/5 text-white"
             >
               <MinusCircle size={16} />
             </Button>
-            <span className="w-8 text-center">{item.quantity}</span>
+            <span className="w-8 text-center text-sm">{item.quantity}</span>
             <Button
               type="button"
               variant="ghost"
               size="icon"
               onClick={increaseQuantity}
               aria-label="Zvýšit množství"
-              className="h-8 w-8"
+              className="h-8 w-8 hover:bg-white/5 text-white"
             >
               <PlusCircle size={16} />
             </Button>
           </div>
           
-          <div className="text-right min-w-[90px]">
-            <div className="font-semibold">{formattedTotal}</div>
+          <div className="flex items-center gap-4">
+            <span className="font-medium">
+              {formatPrice(item.price * item.quantity)}
+            </span>
+            
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              onClick={() => removeItem(item.id)}
+              aria-label="Odebrat položku"
+              className="h-8 w-8 text-red-400 hover:text-red-300 hover:bg-red-400/10"
+            >
+              <Trash2 size={16} />
+            </Button>
           </div>
-          
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            onClick={() => removeItem(item.id)}
-            aria-label="Odebrat položku"
-            className="text-red-500 hover:text-red-600 hover:bg-red-50"
-          >
-            <Trash2 size={18} />
-          </Button>
         </div>
       </div>
     </div>
