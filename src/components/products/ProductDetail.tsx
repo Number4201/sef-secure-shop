@@ -4,6 +4,11 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { getProductBySlug, getRelatedProducts } from '@/data/products';
 import { categoryNames } from '@/utils/categoryMapping';
+import {
+  HoverCard,
+  HoverCardTrigger,
+  HoverCardContent,
+} from "@/components/ui/hover-card"
 import ProductGrid from './ProductGrid';
 import ProductInfo from './ProductInfo';
 import ProductTabs from './ProductTabs';
@@ -45,13 +50,24 @@ const ProductDetail: React.FC = () => {
 
       {/* Product details section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-        {/* Product image */}
+        {/* Product image with hover card */}
         <div className="bg-white rounded-lg overflow-hidden border border-gray-700 p-4">
-          <img 
-            src={product.image} 
-            alt={product.name} 
-            className="w-full h-auto object-cover rounded-lg"
-          />
+          <HoverCard>
+            <HoverCardTrigger asChild>
+              <img 
+                src={product.image} 
+                alt={product.name} 
+                className="w-full h-auto object-cover rounded-lg cursor-zoom-in"
+              />
+            </HoverCardTrigger>
+            <HoverCardContent className="w-[600px] h-auto p-0">
+              <img
+                src={product.image}
+                alt={product.name}
+                className="w-full h-auto object-contain rounded-lg"
+              />
+            </HoverCardContent>
+          </HoverCard>
         </div>
 
         {/* Product info */}
