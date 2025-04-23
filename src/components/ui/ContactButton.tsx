@@ -18,15 +18,15 @@ const ContactButton: React.FC = () => {
         <DialogTrigger asChild>
           <Button 
             size="lg" 
-            className="bg-[#E5334B] hover:bg-[#c52435] text-white font-bold px-6 py-3 rounded-full shadow-lg flex items-center gap-2"
+            className="bg-[#E5334B] hover:bg-[#c52435] text-white font-bold px-6 py-3 rounded-full shadow-lg flex items-center gap-2 animate-slow-glow"
           >
             <Phone size={18} />
             <span>Kontaktujte nás</span>
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px] bg-white rounded-md p-6">
+        <DialogContent className="sm:max-w-[425px] bg-esejfy-dark-primary text-white rounded-md p-6 border-esejfy-dark-secondary">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold text-center mb-2">Kontaktní informace</DialogTitle>
+            <DialogTitle className="text-2xl font-bold text-center mb-2 text-white">Kontaktní informace</DialogTitle>
           </DialogHeader>
           <ContactInfo />
         </DialogContent>

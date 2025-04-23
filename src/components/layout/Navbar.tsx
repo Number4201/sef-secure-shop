@@ -46,7 +46,7 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Main navbar */}
-      <div className="bg-white shadow-sm">
+      <div className="bg-esejfy-dark-primary shadow-sm">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
@@ -68,7 +68,7 @@ const Navbar: React.FC = () => {
                   variant="ghost" 
                   size="icon" 
                   onClick={toggleSearch}
-                  className="hover:bg-gray-100 h-10 w-10 p-2"
+                  className="hover:bg-esejfy-dark-secondary h-10 w-10 p-2"
                   aria-label="Vyhledat"
                 >
                   <Search size={18} />
@@ -79,7 +79,7 @@ const Navbar: React.FC = () => {
                 <Button 
                   variant="ghost" 
                   size="icon" 
-                  className="hover:bg-gray-100 h-10 w-10 p-2"
+                  className="hover:bg-esejfy-dark-secondary h-10 w-10 p-2"
                   aria-label="Účet"
                 >
                   <User size={18} />
@@ -93,7 +93,7 @@ const Navbar: React.FC = () => {
                 <Button 
                   variant="ghost" 
                   size="icon" 
-                  className="hover:bg-gray-100 h-10 w-10 p-2"
+                  className="hover:bg-esejfy-dark-secondary h-10 w-10 p-2"
                   onClick={toggleMobileMenu}
                   aria-label="Menu"
                 >

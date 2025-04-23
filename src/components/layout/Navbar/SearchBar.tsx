@@ -19,7 +19,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ isOpen, autoFocus }) => {
         <Input
           type="search"
           placeholder="Hledejte produkty..."
-          className="w-full"
+          className="w-full bg-esejfy-dark-secondary border-esejfy-dark-accent text-white"
           autoFocus={autoFocus}
         />
         <Button className="ml-2 bg-esejfy-burgundy hover:bg-esejfy-burgundy/90">
