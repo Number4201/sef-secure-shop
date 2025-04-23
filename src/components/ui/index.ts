@@ -37,12 +37,16 @@ export * from "./sheet";
 export * from "./sidebar";
 export * from "./skeleton";
 export * from "./slider";
-export * from "./sonner";
+// Export toast from Sonner explicitly to avoid conflicts
+export { toast } from "./sonner";
+// Export Toaster component from sonner as SonnerToaster to avoid name collision
+export { Toaster as SonnerToaster } from "./sonner";
 export * from "./switch";
 export * from "./table";
 export * from "./tabs";
 export * from "./textarea";
 export * from "./toast";
+// Export Toaster component from regular toast system
 export * from "./toaster";
 export * from "./toggle";
 export * from "./toggle-group";
