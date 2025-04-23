@@ -42,13 +42,13 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <header className={`sticky top-0 z-50 bg-white w-full border-b transition-shadow duration-300 ${
+    <header className={`sticky top-0 z-50 w-full border-b transition-shadow duration-300 ${
       isScrolled ? 'shadow-md' : 'shadow-sm'
     }`}>
       {/* Top bar with contact info */}
       {!isMobile && (
-        <div className="hidden md:flex justify-end items-center h-8 px-4 bg-esejfy-burgundy text-white text-xs">
-          <div className="flex items-center space-x-4">
+        <div className="flex justify-end items-center h-8 px-4 bg-esejfy-burgundy text-white text-xs">
+          <div className="container mx-auto flex justify-end items-center space-x-4">
             <span>info@esejfy.net</span>
             <span>+420 123 456 789</span>
           </div>
@@ -56,52 +56,54 @@ const Navbar: React.FC = () => {
       )}
 
       {/* Main navbar */}
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link to="/" className="flex items-center">
-            <img 
-              src="/lovable-uploads/7b944fb8-655b-4973-9817-efca20874478.png" 
-              alt="eSEJFY.net" 
-              className="h-8"
-            />
-          </Link>
-          
-          {/* Desktop Navigation */}
-          {!isMobile && <NavLinks />}
-          
-          {/* Action buttons */}
-          <div className="flex items-center space-x-1">
-            {!isMobile && (
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                onClick={toggleSearch}
-                className="hover:bg-esejfy-lightgray h-10 w-10 p-2"
-                aria-label="Vyhledat"
-              >
-                <Search size={18} />
-              </Button>
-            )}
-            <CartButton />
+      <div className="bg-esejfy-dark-primary">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo */}
+            <Link to="/" className="flex items-center">
+              <img 
+                src="/lovable-uploads/7b944fb8-655b-4973-9817-efca20874478.png" 
+                alt="eSEJFY.net" 
+                className="h-8"
+              />
+            </Link>
             
-            {/* Mobile menu button */}
-            {isMobile && (
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                className="hover:bg-esejfy-lightgray h-10 w-10 p-2"
-                onClick={toggleMobileMenu}
-                aria-label="Menu"
-              >
-                <Menu size={18} />
-              </Button>
-            )}
+            {/* Desktop Navigation */}
+            {!isMobile && <NavLinks />}
+            
+            {/* Action buttons */}
+            <div className="flex items-center space-x-1">
+              {!isMobile && (
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  onClick={toggleSearch}
+                  className="hover:bg-esejfy-lightgray text-white h-10 w-10 p-2"
+                  aria-label="Vyhledat"
+                >
+                  <Search size={18} />
+                </Button>
+              )}
+              <CartButton />
+              
+              {/* Mobile menu button */}
+              {isMobile && (
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="hover:bg-esejfy-lightgray text-white h-10 w-10 p-2"
+                  onClick={toggleMobileMenu}
+                  aria-label="Menu"
+                >
+                  <Menu size={18} />
+                </Button>
+              )}
+            </div>
           </div>
+          
+          {/* Search bar */}
+          {!isMobile && <SearchBar isOpen={isSearchOpen} autoFocus={isSearchOpen} />}
         </div>
-        
-        {/* Search bar */}
-        {!isMobile && <SearchBar isOpen={isSearchOpen} autoFocus={isSearchOpen} />}
       </div>
       
       {/* Mobile menu */}
