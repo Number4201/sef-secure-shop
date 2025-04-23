@@ -4,6 +4,13 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ShieldCheck, Lock, Flame } from 'lucide-react';
 
+const FeatureBadge: React.FC<{ icon: React.ReactNode, text: string }> = ({ icon, text }) => (
+  <div className="flex items-center gap-3">
+    {icon}
+    <span className="font-medium text-base">{text}</span>
+  </div>
+);
+
 const HeroSection: React.FC = () => {
   return (
     <section className="relative bg-gradient-to-r from-esejfy-burgundy to-esejfy-burgundy/80 text-white">
@@ -26,28 +33,27 @@ const HeroSection: React.FC = () => {
           </div>
           <div className="slide-in">
             <div className="relative">
-              {/* Main image */}
               <img 
                 src="https://images.unsplash.com/photo-1610130383669-95917c70ca20?q=80&w=2000" 
                 alt="eSEJFY trezor" 
                 className="w-full rounded-xl shadow-2xl border-4 border-white/20"
+                loading="eager"
               />
               
-              {/* Features */}
               <div className="absolute -bottom-8 left-0 right-0 mx-auto w-11/12">
                 <div className="bg-white text-gray-800 rounded-lg shadow-xl p-5 flex justify-between">
-                  <div className="flex items-center gap-3">
-                    <ShieldCheck size={28} className="text-esejfy-burgundy" />
-                    <span className="font-medium text-base">Certifikováno</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Lock size={28} className="text-esejfy-burgundy" />
-                    <span className="font-medium text-base">Zabezpečeno</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Flame size={28} className="text-esejfy-burgundy" />
-                    <span className="font-medium text-base">Ohnivzdorné</span>
-                  </div>
+                  <FeatureBadge 
+                    icon={<ShieldCheck size={28} className="text-esejfy-burgundy" />} 
+                    text="Certifikováno" 
+                  />
+                  <FeatureBadge 
+                    icon={<Lock size={28} className="text-esejfy-burgundy" />} 
+                    text="Zabezpečeno" 
+                  />
+                  <FeatureBadge 
+                    icon={<Flame size={28} className="text-esejfy-burgundy" />} 
+                    text="Ohnivzdorné" 
+                  />
                 </div>
               </div>
             </div>
@@ -55,7 +61,6 @@ const HeroSection: React.FC = () => {
         </div>
       </div>
       
-      {/* Enhanced decorative shape with more curve */}
       <div className="absolute bottom-0 left-0 right-0 h-24 bg-white" style={{
         clipPath: 'polygon(0 100%, 100% 100%, 100% 30%, 75% 70%, 50% 50%, 25% 70%, 0 30%)'
       }}></div>
