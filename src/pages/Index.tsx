@@ -9,23 +9,25 @@ import TestimonialSection from '@/components/home/TestimonialSection';
 import CallToAction from '@/components/home/CallToAction';
 import ContactButton from '@/components/ui/ContactButton';
 import { getFeaturedProducts } from '@/data/products';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const FeaturedProductsSection = React.memo(() => {
   const featuredProducts = getFeaturedProducts();
+  const isMobile = useIsMobile();
   
   return (
-    <section className="py-20 bg-white">
+    <section className={`${isMobile ? 'py-12' : 'py-20'} bg-white`}>
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4">Nejprodávanější produkty</h2>
+        <div className={`text-center ${isMobile ? 'mb-8' : 'mb-12'}`}>
+          <h2 className={`${isMobile ? 'text-2xl' : 'text-4xl'} font-bold mb-4`}>Nejprodávanější produkty</h2>
           <p className="text-gray-600 text-lg max-w-3xl mx-auto">
-            Objevte naše nejoblíbenější trezory a sejfy, které si naši zákazníci vybírají nejčastěji
+            Objevte naše nejoblíbenější trezory
           </p>
         </div>
         
         <ProductGrid products={featuredProducts} />
         
-        <div className="text-center mt-12">
+        <div className="text-center mt-8">
           <a 
             href="/products" 
             className="inline-flex items-center text-lg text-esejfy-burgundy hover:text-esejfy-burgundy/80 font-medium animated-underline"
@@ -41,15 +43,19 @@ const FeaturedProductsSection = React.memo(() => {
 FeaturedProductsSection.displayName = 'FeaturedProductsSection';
 
 const Index = () => {
+  const isMobile = useIsMobile();
+  
   return (
     <Layout>
-      <HeroSection />
-      <ContactButton />
-      <CategorySection />
-      <FeaturedProductsSection />
-      <FeaturesSection />
-      <TestimonialSection />
-      <CallToAction />
+      <div className="overflow-hidden w-full">
+        <HeroSection />
+        {!isMobile && <ContactButton />}
+        <CategorySection />
+        <FeaturedProductsSection />
+        <FeaturesSection />
+        {!isMobile && <TestimonialSection />}
+        <CallToAction />
+      </div>
     </Layout>
   );
 };

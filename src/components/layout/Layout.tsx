@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Suspense, lazy } from 'react';
+import { useIsMobile } from '@/hooks/use-mobile';
 import Navbar from './Navbar';
 
 // Lazy load Footer for better initial load performance
@@ -11,11 +12,15 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
+  const isMobile = useIsMobile();
+  
   return (
-    <div className="flex flex-col min-h-screen max-w-full overflow-x-hidden">
+    <div className="flex flex-col min-h-screen overflow-hidden w-full">
       <Navbar />
-      <main className="flex-grow max-w-full overflow-x-hidden">{children}</main>
-      <Suspense fallback={<div className="h-64 bg-esejfy-gray/10"></div>}>
+      <main className={`flex-grow overflow-hidden ${isMobile ? 'mobile-container' : ''}`}>
+        {children}
+      </main>
+      <Suspense fallback={<div className="h-16 bg-esejfy-gray/10"></div>}>
         <Footer />
       </Suspense>
     </div>

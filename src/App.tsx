@@ -20,7 +20,7 @@ const PageLoader = () => (
 
 function App() {
   return (
-    <div className="overflow-x-hidden w-full max-w-[100vw]">
+    <div className="overflow-hidden w-full max-w-[100vw]">
       <Router>
         <CartProvider>
           <Suspense fallback={<PageLoader />}>
