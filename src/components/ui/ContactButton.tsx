@@ -1,11 +1,10 @@
 
 import React from 'react';
-import { PhoneCall } from 'lucide-react';
+import { Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { 
   Dialog, 
   DialogContent, 
-  DialogDescription, 
   DialogHeader, 
   DialogTitle, 
   DialogTrigger 
@@ -24,17 +23,14 @@ const ContactButton: React.FC = () => {
               className="relative bg-[#ea384c] hover:bg-[#c52435] text-white font-bold px-6 py-6 rounded-full shadow-2xl border-2 border-white transition-all duration-300 hover:scale-105"
             >
               <span className="flex items-center gap-2">
-                <PhoneCall size={20} />
+                <Phone size={20} />
                 Kontaktujte nás
               </span>
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px] bg-white">
+          <DialogContent className="sm:max-w-[425px] bg-white rounded-md p-6">
             <DialogHeader>
-              <DialogTitle className="text-2xl text-center mb-4">Kontaktní informace</DialogTitle>
-              <DialogDescription className="text-center">
-                Neváhejte nás kontaktovat pro jakékoliv dotazy nebo pomoc s výběrem trezoru.
-              </DialogDescription>
+              <DialogTitle className="text-2xl font-bold text-center mb-2">Kontaktní informace</DialogTitle>
             </DialogHeader>
             <ContactInfo />
           </DialogContent>
