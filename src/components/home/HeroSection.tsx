@@ -2,8 +2,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Shield, Lock, Flame } from 'lucide-react';
+import { Search, Shield, Lock, Flame } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 const FeatureInfo: React.FC<{ icon: React.ReactNode, text: string }> = ({ icon, text }) => (
   <div className="flex items-center gap-2">
@@ -15,9 +16,13 @@ const FeatureInfo: React.FC<{ icon: React.ReactNode, text: string }> = ({ icon, 
 const HeroSection: React.FC = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+  const [searchQuery, setSearchQuery] = useState('');
   
-  const handleExploreProducts = () => {
-    navigate('/products');
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/products?search=${encodeURIComponent(searchQuery)}`);
+    }
   };
 
   return (
@@ -32,15 +37,23 @@ const HeroSection: React.FC = () => {
               Profesionální trezory a sejfy s certifikovanou ochranou pro vaše cennosti, dokumenty a zbraně.
             </p>
             
-            <div>
+            <form onSubmit={handleSearch} className="relative max-w-xl">
+              <Input
+                type="search"
+                placeholder="Vyhledat trezor..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full h-12 pl-12 pr-4 rounded-lg bg-white/10 border-white/20 text-white placeholder:text-white/60 focus:bg-white/15 focus:border-white/30"
+              />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
               <Button 
-                onClick={handleExploreProducts}
-                size={isMobile ? "default" : "lg"}
-                className="bg-white text-esejfy-burgundy hover:bg-gray-100 font-medium"
+                type="submit"
+                className="absolute right-2 top-1/2 -translate-y-1/2 bg-white text-esejfy-burgundy hover:bg-gray-100"
+                size="sm"
               >
-                Prozkoumat produkty
+                Hledat
               </Button>
-            </div>
+            </form>
           </div>
           
           <div className="relative">

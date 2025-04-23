@@ -12,6 +12,15 @@ import { Link } from 'react-router-dom';
 const CartPage = () => {
   const { cart, updateItemQuantity, removeItem } = useCart();
 
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('cs-CZ', { 
+      style: 'currency', 
+      currency: 'CZK',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0 
+    }).format(price);
+  };
+
   if (cart.length === 0) {
     return (
       <Layout>
@@ -41,6 +50,7 @@ const CartPage = () => {
                     item={item}
                     updateQuantity={updateItemQuantity}
                     removeItem={removeItem}
+                    formatPrice={formatPrice}
                   />
                 ))}
               </div>
