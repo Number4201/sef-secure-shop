@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -57,13 +56,7 @@ const HeroSection: React.FC = () => {
           </div>
           
           <div className="relative">
-            <div className="rounded-lg overflow-hidden shadow-2xl relative">
-              <img 
-                src="/lovable-uploads/faf1b29d-8bbf-41de-a237-9fcc4ba21dca.png" 
-                alt="Bezpečnostní trezory a sejfy" 
-                className="w-full h-auto object-cover"
-                loading="eager"
-              />
+            <div className="rounded-lg overflow-hidden shadow-2xl bg-black h-[400px]">
               <div className="absolute top-4 right-4 bg-[#222] text-[#ea384c] px-3 py-1 rounded-md text-sm font-bold">
                 Reklama
               </div>
