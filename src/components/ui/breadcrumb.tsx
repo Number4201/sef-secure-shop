@@ -45,13 +45,16 @@ const BreadcrumbItem = React.forwardRef<HTMLLIElement, BreadcrumbItemProps>(
 BreadcrumbItem.displayName = "BreadcrumbItem";
 
 interface BreadcrumbLinkProps extends React.ComponentPropsWithoutRef<typeof Link> {
-  href: string;
+  href?: string;
   isCurrentPage?: boolean;
   children: React.ReactNode;
 }
 
 const BreadcrumbLink = React.forwardRef<HTMLAnchorElement, BreadcrumbLinkProps>(
-  ({ className, href, isCurrentPage = false, children, ...props }, ref) => {
+  ({ className, href, to, isCurrentPage = false, children, ...props }, ref) => {
+    // Use href as to if to is not provided
+    const linkTo = to || href || "";
+    
     if (isCurrentPage) {
       return (
         <span
@@ -66,7 +69,7 @@ const BreadcrumbLink = React.forwardRef<HTMLAnchorElement, BreadcrumbLinkProps>(
     return (
       <Link
         ref={ref}
-        to={href}
+        to={linkTo}
         className={cn(
           "text-gray-500 hover:text-esejfy-burgundy transition-colors animated-underline",
           className
