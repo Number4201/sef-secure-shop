@@ -11,6 +11,8 @@ const ProductDetailPage = lazy(() => import('./pages/ProductDetail'));
 const CartPage = lazy(() => import('./pages/CartPage'));
 const BlogPage = lazy(() => import('./pages/Blog'));
 const BlogPostPage = lazy(() => import('./pages/BlogPost'));
+const AboutUsPage = lazy(() => import('./pages/AboutUs'));
+const ContactPage = lazy(() => import('./pages/Contact'));
 const NotFoundPage = lazy(() => import('./pages/NotFound'));
 
 // Loading fallback
@@ -33,6 +35,8 @@ function App() {
               <Route path="/cart" element={<CartPage />} />
               <Route path="/blog" element={<BlogPage />} />
               <Route path="/blog/:slug" element={<BlogPostPage />} />
+              <Route path="/o-nas" element={<AboutUsPage />} />
+              <Route path="/kontakt" element={<ContactPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </Suspense>

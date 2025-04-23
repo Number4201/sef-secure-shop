@@ -1,12 +1,9 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { cn } from '@/lib/utils';
+import { X, ChevronDown, ChevronRight } from 'lucide-react';
 import { categories } from './NavLinks';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Search, X } from 'lucide-react';
-import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -14,102 +11,96 @@ interface MobileMenuProps {
 }
 
 const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onLinkClick }) => {
+  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+  
   return (
     <div 
-      className={cn(
-        "fixed inset-x-0 z-50 bg-white transition-all duration-300 ease-in-out",
-        isOpen ? "top-16 bottom-0" : "-top-[100vh]"
-      )}
+      className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-50 lg:hidden transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+      aria-hidden={!isOpen}
     >
-      <ScrollArea className="h-[calc(100vh-4rem)]">
-        <div className="p-4">
-          {/* Mobile search */}
-          <div className="mb-4">
-            <div className="relative">
-              <Input
-                type="search"
-                placeholder="Hledat produkty..."
-                className="pr-10"
-              />
-              <Button 
-                size="icon" 
-                className="absolute right-0 top-0 bg-transparent hover:bg-transparent"
-              >
-                <Search size={18} className="text-gray-500" />
-              </Button>
-            </div>
-          </div>
-          
-          {/* Navigation links - simplified */}
-          <nav className="flex flex-col space-y-1">
-            <Link 
-              to="/" 
-              className="px-3 py-3 hover:bg-gray-100 rounded-md"
-              onClick={onLinkClick}
-            >
-              Domů
-            </Link>
-            
-            {/* Products section */}
-            <div className="mb-1">
-              <div className="px-3 py-2 font-medium">Produkty</div>
-              <div className="pl-3 space-y-1">
-                {categories.map((category) => (
-                  <Link 
-                    key={category.path}
-                    to={category.path}
-                    className="block py-2 px-3 hover:bg-gray-100 rounded-md text-sm"
-                    onClick={onLinkClick}
-                  >
-                    {category.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
-            
-            <Link 
-              to="/blog" 
-              className="px-3 py-3 hover:bg-gray-100 rounded-md"
-              onClick={onLinkClick}
-            >
-              Blog
-            </Link>
-            
-            <Link 
-              to="/o-nas" 
-              className="px-3 py-3 hover:bg-gray-100 rounded-md"
-              onClick={onLinkClick}
-            >
-              O nás
-            </Link>
-            <Link 
-              to="/kontakt" 
-              className="px-3 py-3 hover:bg-gray-100 rounded-md"
-              onClick={onLinkClick}
-            >
-              Kontakt
-            </Link>
-            
-            {/* Contact info */}
-            <div className="mt-4 bg-gray-50 p-3 rounded-md">
-              <div className="text-sm font-medium mb-2">Kontakt</div>
-              <div className="text-sm mb-1">info@esejfy.net</div>
-              <div className="text-sm">+420 123 456 789</div>
-            </div>
-          </nav>
+      <div 
+        className={`absolute right-0 top-0 h-screen w-3/4 max-w-sm bg-white shadow-xl transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+      >
+        <div className="flex items-center justify-between p-4 border-b">
+          <h2 className="font-bold text-lg">Menu</h2>
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={onLinkClick} 
+            className="hover:bg-gray-100 h-10 w-10 p-2 rounded-full"
+            aria-label="Zavřít"
+          >
+            <X size={18} />
+          </Button>
         </div>
         
-        {/* Close button */}
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={onLinkClick}
-          className="absolute top-2 right-2"
-          aria-label="Zavřít menu"
-        >
-          <X size={18} />
-        </Button>
-      </ScrollArea>
+        <nav className="p-4">
+          <ul className="space-y-4">
+            <li>
+              <Link 
+                to="/" 
+                className="block p-2 hover:bg-gray-100 rounded-md transition-colors" 
+                onClick={onLinkClick}
+              >
+                Domů
+              </Link>
+            </li>
+            <li>
+              <button
+                className="flex items-center justify-between w-full p-2 hover:bg-gray-100 rounded-md transition-colors"
+                onClick={() => setIsCategoryOpen(!isCategoryOpen)}
+                aria-expanded={isCategoryOpen}
+              >
+                <span>Produkty</span>
+                {isCategoryOpen ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
+              </button>
+              
+              {isCategoryOpen && (
+                <ul className="pl-4 mt-2 space-y-2 border-l-2 border-gray-200">
+                  {categories.map((category) => (
+                    <li key={category.path}>
+                      <Link 
+                        to={category.path} 
+                        className="block p-2 hover:bg-gray-100 rounded-md transition-colors" 
+                        onClick={onLinkClick}
+                      >
+                        {category.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+            <li>
+              <Link 
+                to="/o-nas" 
+                className="block p-2 hover:bg-gray-100 rounded-md transition-colors" 
+                onClick={onLinkClick}
+              >
+                O nás
+              </Link>
+            </li>
+            <li>
+              <Link 
+                to="/kontakt" 
+                className="block p-2 hover:bg-gray-100 rounded-md transition-colors" 
+                onClick={onLinkClick}
+              >
+                Kontakt
+              </Link>
+            </li>
+            <li>
+              <Link 
+                to="/blog" 
+                className="block p-2 hover:bg-gray-100 rounded-md transition-colors" 
+                onClick={onLinkClick}
+              >
+                Blog
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
   );
 };

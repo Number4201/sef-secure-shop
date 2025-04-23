@@ -1,14 +1,15 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { ChevronDown } from 'lucide-react';
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger
+} from '@/components/ui/navigation-menu';
+import { cn } from '@/lib/utils';
 
 export const categories = [
   { name: 'Nábytkové trezory', path: '/products?category=nabytkove-trezory' },
@@ -24,28 +25,53 @@ export const categories = [
   { name: 'Archivační skříně', path: '/products?category=archivacni-skrine' },
 ];
 
+const ListItem = React.forwardRef<
+  React.ElementRef<"a">,
+  React.ComponentPropsWithoutRef<"a">
+>(({ className, children, ...props }, ref) => {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <a
+          ref={ref}
+          className={cn(
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            className
+          )}
+          {...props}
+        >
+          {children}
+        </a>
+      </NavigationMenuLink>
+    </li>
+  )
+})
+ListItem.displayName = "ListItem"
+
 const NavLinks: React.FC = () => {
   return (
     <nav className="hidden lg:flex items-center space-x-6">
       <Link to="/" className="text-gray-900 hover:text-esejfy-burgundy transition-colors font-medium">
         Domů
       </Link>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="link" className="text-gray-900 hover:text-esejfy-burgundy transition-colors flex items-center gap-1 p-0 font-medium">
-            Produkty <ChevronDown size={14} />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="center" className="w-56">
-          {categories.map((category) => (
-            <DropdownMenuItem key={category.path} asChild>
-              <Link to={category.path} className="w-full">
-                {category.name}
-              </Link>
-            </DropdownMenuItem>
-          ))}
-        </DropdownMenuContent>
-      </DropdownMenu>
+      
+      <NavigationMenu>
+        <NavigationMenuList>
+          <NavigationMenuItem>
+            <NavigationMenuTrigger className="bg-transparent hover:bg-transparent hover:text-esejfy-burgundy text-gray-900 font-medium">Produkty</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                {categories.map((category) => (
+                  <ListItem key={category.path} href={category.path}>
+                    {category.name}
+                  </ListItem>
+                ))}
+              </ul>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
+      
       <Link to="/o-nas" className="text-gray-900 hover:text-esejfy-burgundy transition-colors font-medium">
         O nás
       </Link>
