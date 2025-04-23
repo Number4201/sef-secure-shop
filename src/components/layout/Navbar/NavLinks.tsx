@@ -18,6 +18,10 @@ export const categories = [
   { name: 'Vhozové trezory', path: '/products?category=vhozove-trezory' },
   { name: 'Ohnivzdorné trezory', path: '/products?category=ohnivzdorne-trezory' },
   { name: 'Trezory na hotovost', path: '/products?category=trezory-na-hotovost' },
+  { name: 'Trezory na dokumenty', path: '/products?category=trezory-na-dokumenty' },
+  { name: 'Trezory na klíče', path: '/products?category=trezory-na-klice' },
+  { name: 'Hotelové trezory', path: '/products?category=hotelove-trezory' },
+  { name: 'Archivační skříně', path: '/products?category=archivacni-skrine' },
 ];
 
 const NavLinks: React.FC = () => {
@@ -42,6 +46,9 @@ const NavLinks: React.FC = () => {
           ))}
         </DropdownMenuContent>
       </DropdownMenu>
+      <Link to="/blog" className="text-sm font-medium hover:text-esejfy-burgundy transition-colors animated-underline">
+        Blog
+      </Link>
       <Link to="/o-nas" className="text-sm font-medium hover:text-esejfy-burgundy transition-colors animated-underline">
         O nás
       </Link>

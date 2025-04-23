@@ -18,6 +18,15 @@ export interface Product {
     depth: number;
   };
   weight?: number;
+  // New fields
+  certificationLevel?: string;  // Bezpečnostní třída
+  documentProtection?: string;  // Stupeň utajení dokumentů
+  lockType?: string;           // Typ zámku - klíčový, elektronický
+  keyCapacity?: number;        // Kapacita na klíče
+  fireProtectionTime?: number;  // Doba ohnivzdornosti v minutách
+  waterResistant?: boolean;     // Vodotěsnost
+  installationType?: 'wall' | 'floor' | 'furniture' | 'door'; // Typ instalace
+  recommendedInsurance?: number; // Doporučená pojistná částka
 }
 
 export type ProductCategory = 
@@ -27,4 +36,8 @@ export type ProductCategory =
   | 'trezory-na-zbrane'
   | 'vhozove-trezory'
   | 'ohnivzdorne-trezory'
-  | 'trezory-na-hotovost';
+  | 'trezory-na-hotovost'
+  | 'trezory-na-dokumenty'
+  | 'trezory-na-klice'
+  | 'hotelove-trezory'
+  | 'archivacni-skrine';

@@ -68,6 +68,14 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onLinkClick }) => {
             </div>
             
             <Link 
+              to="/blog" 
+              className="px-3 py-3 hover:bg-gray-100 rounded-md"
+              onClick={onLinkClick}
+            >
+              Blog
+            </Link>
+            
+            <Link 
               to="/o-nas" 
               className="px-3 py-3 hover:bg-gray-100 rounded-md"
               onClick={onLinkClick}
