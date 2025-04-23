@@ -30,7 +30,7 @@ const CallToAction: React.FC = () => {
               <DialogTrigger asChild>
                 <Button 
                   size="lg" 
-                  className="bg-white text-[#7E69AB] hover:bg-white/90 shadow-lg transition-all duration-300 hover:scale-105 font-medium w-full sm:w-auto"
+                  className="bg-[#ea384c] text-white hover:bg-[#c52435] shadow-lg transition-all duration-300 hover:scale-105 font-medium w-full sm:w-auto"
                 >
                   <span className="flex items-center gap-2 justify-center">
                     Kontaktujte nás

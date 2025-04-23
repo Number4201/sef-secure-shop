@@ -8,6 +8,9 @@ import FeaturesSection from '@/components/home/FeaturesSection';
 import TestimonialSection from '@/components/home/TestimonialSection';
 import CallToAction from '@/components/home/CallToAction';
 import { getFeaturedProducts } from '@/data/products';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { PhoneCall, Mail, Facebook, Instagram, Linkedin } from 'lucide-react';
 
 const Index = () => {
   const featuredProducts = getFeaturedProducts();
