@@ -3,6 +3,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { CartItem } from '@/types/cart';
+import { Zap } from 'lucide-react';
 
 interface CartSummaryProps {
   items: CartItem[];
@@ -54,7 +55,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({ items }) => {
       
       <div className="mt-6 text-sm space-y-2">
         <p className="flex items-center gap-1">
-          <span className="w-4 h-4 rounded-full bg-green-500"></span>
+          <Zap size={16} className="text-yellow-500" />
           <span>Doprava zdarma při objednávce nad 5 000 Kč</span>
         </p>
         <p className="flex items-center gap-1">
