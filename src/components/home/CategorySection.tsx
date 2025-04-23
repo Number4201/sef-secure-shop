@@ -72,13 +72,10 @@ const CategorySection: React.FC = () => {
   const isMobile = useIsMobile();
   
   return (
-    <section className={`${isMobile ? 'py-12' : 'py-24'} bg-white`}>
+    <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
-        <div className={`text-center ${isMobile ? 'mb-8' : 'mb-14'}`}>
-          <h2 className={`${isMobile ? 'text-2xl' : 'text-4xl'} font-bold mb-3`}>Naše kategorie</h2>
-          <p className={`text-gray-600 ${isMobile ? 'text-base' : 'text-lg'} max-w-3xl mx-auto`}>
-            Objevte naši širokou nabídku trezorů
-          </p>
+        <div className="text-center mb-10">
+          <h2 className="text-3xl font-bold mb-3">Naše kategorie</h2>
         </div>
         
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">

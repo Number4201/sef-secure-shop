@@ -2,133 +2,79 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Search, Filter, ShieldCheck, Lock, Flame } from 'lucide-react';
-import { Input } from '@/components/ui/input';
+import { Shield, Lock, Flame } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { categoryNames } from '@/utils/categoryMapping';
 
-const FeatureBadge: React.FC<{ icon: React.ReactNode, text: string }> = ({ icon, text }) => (
-  <div className="flex items-center gap-2 bg-esejfy-dark-secondary/70 p-3 rounded-lg backdrop-blur-sm border border-white/5">
+const FeatureInfo: React.FC<{ icon: React.ReactNode, text: string }> = ({ icon, text }) => (
+  <div className="flex items-center gap-2">
     <span className="text-esejfy-burgundy">{icon}</span>
-    <span className="font-medium text-sm text-white">{text}</span>
+    <span className="font-medium text-sm">{text}</span>
   </div>
 );
 
 const HeroSection: React.FC = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
-  const [priceRange, setPriceRange] = useState<string>('');
-  const [safeClass, setSafeClass] = useState<string>('');
-
-  const handleSearch = () => {
-    const params = new URLSearchParams();
-    if (searchTerm) params.append('search', searchTerm);
-    if (selectedCategory) params.append('category', selectedCategory);
-    if (priceRange) params.append('price', priceRange);
-    if (safeClass) params.append('class', safeClass);
-    
-    navigate(`/products?${params.toString()}`);
+  
+  const handleExploreProducts = () => {
+    navigate('/products');
   };
 
   return (
-    <section className="relative bg-gradient-to-b from-esejfy-dark-primary to-esejfy-dark-secondary text-white min-h-[80vh] flex items-center">
-      <div className="container mx-auto px-4 py-12 md:py-20">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+    <section className="relative bg-esejfy-burgundy text-white">
+      <div className="container mx-auto px-4 py-12 md:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div className="space-y-6">
+            <h1 className={`${isMobile ? 'text-3xl' : 'text-4xl md:text-5xl'} font-bold leading-tight`}>
               Bezpečnost bez kompromisů pro váš domov i firmu
             </h1>
-            <p className="text-xl opacity-90 max-w-3xl mx-auto text-gray-300 mb-8">
-              Profesionální trezory a sejfy s certifikovanou ochranou
+            <p className="text-lg opacity-90 text-white">
+              Profesionální trezory a sejfy s certifikovanou ochranou pro vaše cennosti, dokumenty a zbraně.
             </p>
+            
+            <div>
+              <Button 
+                onClick={handleExploreProducts}
+                size={isMobile ? "default" : "lg"}
+                className="bg-white text-esejfy-burgundy hover:bg-gray-100 font-medium"
+              >
+                Prozkoumat produkty
+              </Button>
+            </div>
           </div>
           
-          <div className="bg-esejfy-dark-accent/30 backdrop-blur-sm rounded-lg shadow-lg p-6 mx-auto max-w-4xl border border-white/5 mb-12">
-            <div className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
-                <FeatureBadge 
-                  icon={<ShieldCheck size={24} />} 
-                  text="Certifikováno" 
-                />
-                <FeatureBadge 
-                  icon={<Lock size={24} />} 
-                  text="Zabezpečeno" 
-                />
-                <FeatureBadge 
-                  icon={<Flame size={24} />} 
-                  text="Ohnivzdorné" 
-                />
-              </div>
-
-              <div className="flex gap-2">
-                <div className="flex-1">
-                  <Input
-                    type="search"
-                    placeholder="Vyhledejte trezor..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full bg-white/10 border-white/20 text-white placeholder:text-gray-400"
-                  />
-                </div>
-                <Button 
-                  onClick={handleSearch}
-                  className="bg-esejfy-burgundy hover:bg-esejfy-burgundy/90"
-                >
-                  <Search className="h-4 w-4 mr-2" />
-                  Hledat
-                </Button>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                  <SelectTrigger className="w-full bg-white/10 border-white/20 text-white">
-                    <SelectValue placeholder="Kategorie" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {Object.entries(categoryNames).map(([value, label]) => (
-                      <SelectItem key={value} value={value}>
-                        {label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-
-                <Select value={priceRange} onValueChange={setPriceRange}>
-                  <SelectTrigger className="w-full bg-white/10 border-white/20 text-white">
-                    <SelectValue placeholder="Cenové rozpětí" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="0-5000">Do 5 000 Kč</SelectItem>
-                    <SelectItem value="5000-10000">5 000 - 10 000 Kč</SelectItem>
-                    <SelectItem value="10000-20000">10 000 - 20 000 Kč</SelectItem>
-                    <SelectItem value="20000+">Nad 20 000 Kč</SelectItem>
-                  </SelectContent>
-                </Select>
-
-                <Select value={safeClass} onValueChange={setSafeClass}>
-                  <SelectTrigger className="w-full bg-white/10 border-white/20 text-white">
-                    <SelectValue placeholder="Bezpečnostní třída" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="S1">Třída S1</SelectItem>
-                    <SelectItem value="S2">Třída S2</SelectItem>
-                    <SelectItem value="I">Třída I</SelectItem>
-                    <SelectItem value="II">Třída II</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+          <div className="relative">
+            <div className="rounded-lg overflow-hidden shadow-2xl">
+              <img 
+                src="/lovable-uploads/61aa061a-fdac-40e0-baf5-49d9f35949cb.png" 
+                alt="Bezpečnostní trezory a sejfy" 
+                className="w-full h-auto object-cover"
+                loading="eager"
+              />
+            </div>
+            
+            <div className="absolute -bottom-5 left-0 right-0 bg-white rounded-lg p-4 mx-4 shadow-lg flex justify-around">
+              <FeatureInfo icon={<Shield size={24} />} text="Certifikováno" />
+              <FeatureInfo icon={<Lock size={24} />} text="Zabezpečeno" />
+              <FeatureInfo icon={<Flame size={24} />} text="Ohnivzdorné" />
             </div>
           </div>
         </div>
+      </div>
+      
+      {/* Vlna na spodní části sekce */}
+      <div className="absolute bottom-0 left-0 right-0 h-16 overflow-hidden">
+        <svg
+          className="absolute bottom-0 w-full h-full"
+          viewBox="0 0 1440 74"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M1440 74V21.6542C1314.73 58.6542 1134.25 74 898.669 74C663.084 74 453.822 58.6542 270.881 21.6542C179.406 3.98615 89.7029 -4.91725 0 4.99691V74H1440Z"
+            fill="white"
+          />
+        </svg>
       </div>
     </section>
   );

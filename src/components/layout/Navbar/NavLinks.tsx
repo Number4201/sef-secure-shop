@@ -27,32 +27,29 @@ export const categories = [
 const NavLinks: React.FC = () => {
   return (
     <nav className="hidden lg:flex items-center space-x-6">
-      <Link to="/" className="text-sm font-medium text-white hover:text-esejfy-burgundy transition-colors animated-underline">
+      <Link to="/" className="text-gray-900 hover:text-esejfy-burgundy transition-colors font-medium">
         Domů
       </Link>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="link" className="text-sm font-medium text-white hover:text-esejfy-burgundy transition-colors flex items-center gap-1 p-0 animated-underline">
+          <Button variant="link" className="text-gray-900 hover:text-esejfy-burgundy transition-colors flex items-center gap-1 p-0 font-medium">
             Produkty <ChevronDown size={14} />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="center" className="w-56 bg-esejfy-dark-secondary text-white border-esejfy-lightgray">
+        <DropdownMenuContent align="center" className="w-56">
           {categories.map((category) => (
-            <DropdownMenuItem key={category.path} asChild className="hover:bg-esejfy-dark-accent focus:bg-esejfy-dark-accent">
-              <Link to={category.path} className="w-full text-white">
+            <DropdownMenuItem key={category.path} asChild>
+              <Link to={category.path} className="w-full">
                 {category.name}
               </Link>
             </DropdownMenuItem>
           ))}
         </DropdownMenuContent>
       </DropdownMenu>
-      <Link to="/blog" className="text-sm font-medium text-white hover:text-esejfy-burgundy transition-colors animated-underline">
-        Blog
-      </Link>
-      <Link to="/o-nas" className="text-sm font-medium text-white hover:text-esejfy-burgundy transition-colors animated-underline">
+      <Link to="/o-nas" className="text-gray-900 hover:text-esejfy-burgundy transition-colors font-medium">
         O nás
       </Link>
-      <Link to="/kontakt" className="text-sm font-medium text-white hover:text-esejfy-burgundy transition-colors animated-underline">
+      <Link to="/kontakt" className="text-gray-900 hover:text-esejfy-burgundy transition-colors font-medium">
         Kontakt
       </Link>
     </nav>

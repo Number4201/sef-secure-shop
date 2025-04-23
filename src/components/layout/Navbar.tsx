@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Menu, Search, PhoneCall, Mail } from 'lucide-react';
+import { Menu, Search, User, ShoppingCart } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import NavLinks from './Navbar/NavLinks';
 import SearchBar from './Navbar/SearchBar';
@@ -13,16 +13,6 @@ const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const isMobile = useIsMobile();
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  // Handle scroll effect
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -42,25 +32,21 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <header className={`sticky top-0 z-50 w-full transition-shadow duration-300 ${
-      isScrolled ? 'shadow-md' : 'shadow-sm'
-    }`}>
+    <header className="sticky top-0 z-50 w-full">
       {/* Top bar with contact info */}
       <div className="flex justify-end items-center h-10 px-4 bg-esejfy-burgundy text-white text-sm">
         <div className="container mx-auto flex justify-end items-center space-x-4">
-          <a href="mailto:info@esejfy.net" className="flex items-center gap-1 hover:underline">
-            <Mail size={16} />
-            <span>info@esejfy.net</span>
+          <a href="mailto:info@esejfy.net" className="hover:underline">
+            info@esejfy.net
           </a>
-          <a href="tel:+420123456789" className="flex items-center gap-1 hover:underline">
-            <PhoneCall size={16} />
-            <span>+420 123 456 789</span>
+          <a href="tel:+420123456789" className="hover:underline">
+            +420 123 456 789
           </a>
         </div>
       </div>
 
       {/* Main navbar */}
-      <div className="bg-esejfy-dark-primary border-b border-esejfy-dark-secondary">
+      <div className="bg-white shadow-sm">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
@@ -82,12 +68,24 @@ const Navbar: React.FC = () => {
                   variant="ghost" 
                   size="icon" 
                   onClick={toggleSearch}
-                  className="hover:bg-esejfy-lightgray text-white h-10 w-10 p-2"
+                  className="hover:bg-gray-100 h-10 w-10 p-2"
                   aria-label="Vyhledat"
                 >
                   <Search size={18} />
                 </Button>
               )}
+              
+              {!isMobile && (
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="hover:bg-gray-100 h-10 w-10 p-2"
+                  aria-label="Účet"
+                >
+                  <User size={18} />
+                </Button>
+              )}
+              
               <CartButton />
               
               {/* Mobile menu button */}
@@ -95,7 +93,7 @@ const Navbar: React.FC = () => {
                 <Button 
                   variant="ghost" 
                   size="icon" 
-                  className="hover:bg-esejfy-lightgray text-white h-10 w-10 p-2"
+                  className="hover:bg-gray-100 h-10 w-10 p-2"
                   onClick={toggleMobileMenu}
                   aria-label="Menu"
                 >

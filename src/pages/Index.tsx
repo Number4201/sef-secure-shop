@@ -46,7 +46,7 @@ const Index = () => {
   
   return (
     <Layout>
-      <div className="overflow-hidden w-full bg-esejfy-dark-primary text-white">
+      <div className="w-full bg-white">
         <HeroSection />
         <CategorySection />
         <FeaturedProductsSection />
