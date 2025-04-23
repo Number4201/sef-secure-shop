@@ -1,0 +1,136 @@
+
+import React from 'react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { ShieldCheck, Flame, Package, Truck, MinusCircle, PlusCircle } from 'lucide-react';
+import { Product } from '@/types/product';
+import { useToast } from '@/hooks/use-toast';
+
+interface ProductInfoProps {
+  product: Product;
+}
+
+const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
+  const [quantity, setQuantity] = React.useState(1);
+  const { toast } = useToast();
+
+  const formattedPrice = new Intl.NumberFormat('cs-CZ', { 
+    style: 'currency', 
+    currency: 'CZK',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0 
+  }).format(product.price);
+
+  const formattedOriginalPrice = product.originalPrice ? new Intl.NumberFormat('cs-CZ', { 
+    style: 'currency', 
+    currency: 'CZK',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0 
+  }).format(product.originalPrice) : null;
+
+  const increaseQuantity = () => setQuantity(q => q + 1);
+  const decreaseQuantity = () => setQuantity(q => (q > 1 ? q - 1 : 1));
+
+  const handleAddToCart = () => {
+    toast({
+      title: "Přidáno do košíku",
+      description: `Produkt ${product.name} byl přidán do košíku v počtu ${quantity} ks.`
+    });
+  };
+
+  return (
+    <div className="flex flex-col">
+      <h1 className="text-3xl font-bold mb-2">{product.name}</h1>
+      
+      <div className="flex flex-wrap gap-2 mb-4">
+        {product.safeClass && (
+          <Badge className="bg-esejfy-blue text-white">
+            <ShieldCheck size={16} className="mr-1" /> Bezpečnostní třída {product.safeClass}
+          </Badge>
+        )}
+        {product.fireResistance && (
+          <Badge className="bg-orange-600 text-white">
+            <Flame size={16} className="mr-1" /> Ohnivzdornost {product.fireResistance}
+          </Badge>
+        )}
+      </div>
+      
+      <p className="text-gray-700 mb-6">{product.description}</p>
+      
+      {product.dimensions && (
+        <div className="mb-4">
+          <h3 className="font-semibold mb-1">Rozměry:</h3>
+          <p className="text-gray-700">
+            {product.dimensions.width} × {product.dimensions.height} × {product.dimensions.depth} cm
+          </p>
+        </div>
+      )}
+      
+      {product.weight && (
+        <div className="mb-6">
+          <h3 className="font-semibold mb-1">Hmotnost:</h3>
+          <p className="text-gray-700">{product.weight} kg</p>
+        </div>
+      )}
+      
+      <div className="mt-auto">
+        <div className="flex items-baseline mb-2">
+          <span className="text-2xl font-bold text-esejfy-burgundy">{formattedPrice}</span>
+          {formattedOriginalPrice && (
+            <span className="ml-3 text-lg text-gray-500 line-through">{formattedOriginalPrice}</span>
+          )}
+        </div>
+        <p className="text-sm text-gray-500 mb-4">Včetně DPH</p>
+        
+        <div className="flex items-center mb-6">
+          <div className={`w-3 h-3 rounded-full mr-2 ${product.inStock ? 'bg-green-500' : 'bg-red-500'}`}></div>
+          <span>{product.inStock ? 'Skladem' : 'Momentálně nedostupné'}</span>
+        </div>
+        
+        {product.inStock && (
+          <div className="flex items-center gap-4">
+            <div className="flex items-center border rounded-md">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={decreaseQuantity}
+                disabled={quantity <= 1}
+                aria-label="Snížit množství"
+              >
+                <MinusCircle size={18} />
+              </Button>
+              <span className="w-10 text-center">{quantity}</span>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={increaseQuantity}
+                aria-label="Zvýšit množství"
+              >
+                <PlusCircle size={18} />
+              </Button>
+            </div>
+            <Button 
+              className="flex-1 bg-esejfy-burgundy hover:bg-esejfy-burgundy/90"
+              onClick={handleAddToCart}
+            >
+              Přidat do košíku
+            </Button>
+          </div>
+        )}
+        
+        <div className="mt-6 border-t pt-4">
+          <div className="flex items-center gap-2 mb-2">
+            <Truck size={18} className="text-esejfy-burgundy" />
+            <span>Doprava zdarma při objednávce nad 5 000 Kč</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Package size={18} className="text-esejfy-burgundy" />
+            <span>Osobní odběr na prodejně zdarma</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProductInfo;
