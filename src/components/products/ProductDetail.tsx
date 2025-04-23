@@ -3,6 +3,7 @@ import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { getProductBySlug, getRelatedProducts } from '@/data/products';
+import { categoryNames } from '@/utils/categoryMapping';
 import ProductGrid from './ProductGrid';
 import ProductInfo from './ProductInfo';
 import ProductTabs from './ProductTabs';
@@ -15,17 +16,6 @@ const ProductDetail: React.FC = () => {
 
   // Get product data based on slug
   const product = slug ? getProductBySlug(slug) : null;
-
-  // Category name mapping
-  const categoryNames: Record<string, string> = {
-    'nabytkove-trezory': 'Nábytkové trezory',
-    'trezory-do-zdi': 'Trezory do zdi',
-    'trezory-do-podlahy': 'Trezory do podlahy',
-    'trezory-na-zbrane': 'Trezory na zbraně',
-    'vhozove-trezory': 'Vhozové trezory',
-    'ohnivzdorne-trezory': 'Ohnivzdorné trezory',
-    'trezory-na-hotovost': 'Trezory na hotovost'
-  };
 
   // If product not found, show error and redirect
   if (!product) {
@@ -40,8 +30,8 @@ const ProductDetail: React.FC = () => {
     
     return (
       <div className="container mx-auto px-4 py-16 text-center">
-        <h1 className="text-2xl font-bold mb-4">Produkt nenalezen</h1>
-        <p>Požadovaný produkt nebyl nalezen. Budete přesměrováni na hlavní stránku.</p>
+        <h1 className="text-2xl font-bold mb-4 text-white">Produkt nenalezen</h1>
+        <p className="text-gray-300">Požadovaný produkt nebyl nalezen. Budete přesměrováni na hlavní stránku.</p>
       </div>
     );
   }
@@ -56,7 +46,7 @@ const ProductDetail: React.FC = () => {
       {/* Product details section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
         {/* Product image */}
-        <div className="bg-white rounded-lg overflow-hidden border p-4">
+        <div className="bg-white rounded-lg overflow-hidden border border-gray-700 p-4">
           <img 
             src={product.image} 
             alt={product.name} 

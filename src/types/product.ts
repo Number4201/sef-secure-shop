@@ -18,7 +18,7 @@ export interface Product {
     depth: number;
   };
   weight?: number;
-  // New fields
+  // Bezpečnostní specifikace
   certificationLevel?: string;  // Bezpečnostní třída
   documentProtection?: string;  // Stupeň utajení dokumentů
   lockType?: string;           // Typ zámku - klíčový, elektronický
@@ -27,6 +27,10 @@ export interface Product {
   waterResistant?: boolean;     // Vodotěsnost
   installationType?: 'wall' | 'floor' | 'furniture' | 'door'; // Typ instalace
   recommendedInsurance?: number; // Doporučená pojistná částka
+  // Rozšířená kategorizace
+  subcategory?: string; // Podkategorie produktu
+  manufacturer?: string; // Výrobce
+  series?: string;      // Produktová řada
 }
 
 export type ProductCategory = 
@@ -40,4 +44,8 @@ export type ProductCategory =
   | 'trezory-na-dokumenty'
   | 'trezory-na-klice'
   | 'hotelove-trezory'
-  | 'archivacni-skrine';
+  | 'archivacni-skrine'
+  | 'rozbalene-produkty'
+  | 'penezni-boxy'
+  | 'trezorove-dvere'
+  | 'kreone-keybox';

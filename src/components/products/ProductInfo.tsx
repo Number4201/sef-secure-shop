@@ -2,10 +2,23 @@
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ShieldCheck, Flame, Package, Truck, MinusCircle, PlusCircle, Lock, Droplets } from 'lucide-react';
+import { 
+  ShieldCheck, 
+  Flame, 
+  Package, 
+  Truck, 
+  MinusCircle, 
+  PlusCircle, 
+  Lock, 
+  Droplets,
+  FileText,
+  Scale,
+  Info
+} from 'lucide-react';
 import { Product } from '@/types/product';
 import { useToast } from '@/hooks/use-toast';
 import { useCart } from '@/hooks/use-cart';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface ProductInfoProps {
   product: Product;
@@ -42,104 +55,151 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
 
   const handleAddToCart = () => {
     addItem(product, quantity);
+    toast({
+      title: "Přidáno do košíku",
+      description: `${product.name} (${quantity}x) byl přidán do košíku.`
+    });
+  };
+
+  const getInstallationTypeLabel = (type?: string) => {
+    if (!type) return "";
+    switch (type) {
+      case 'wall': return 'Do zdi';
+      case 'floor': return 'Do podlahy';
+      case 'furniture': return 'Nábytkový';
+      case 'door': return 'Trezorové dveře';
+      default: return type;
+    }
   };
 
   return (
-    <div className="flex flex-col">
-      <h1 className="text-3xl font-bold mb-2">{product.name}</h1>
+    <div className="flex flex-col bg-esejfy-dark-secondary p-6 rounded-lg border border-gray-700">
+      <h1 className="text-3xl font-bold mb-2 text-white">{product.name}</h1>
       
       <div className="flex flex-wrap gap-2 mb-4">
         {product.safeClass && (
-          <Badge className="bg-esejfy-blue text-white">
-            <ShieldCheck size={16} className="mr-1" /> Bezpečnostní třída {product.safeClass}
-          </Badge>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Badge className="bg-blue-700 hover:bg-blue-800 text-white cursor-help">
+                  <ShieldCheck size={16} className="mr-1" /> Bezpečnostní třída {product.safeClass}
+                </Badge>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Certifikovaná bezpečnostní třída podle normy ČSN EN 1143-1</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         )}
+        
         {product.fireResistance && (
-          <Badge className="bg-orange-600 text-white">
-            <Flame size={16} className="mr-1" /> Ohnivzdornost {product.fireResistance}
-          </Badge>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Badge className="bg-orange-600 hover:bg-orange-700 text-white cursor-help">
+                  <Flame size={16} className="mr-1" /> Ohnivzdornost {product.fireResistance}
+                </Badge>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Certifikovaná odolnost proti ohni</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         )}
+        
         {product.certificationLevel && (
-          <Badge variant="outline" className="border-esejfy-blue">
+          <Badge variant="outline" className="border-blue-500 text-blue-400">
             <ShieldCheck size={16} className="mr-1" /> Certifikace {product.certificationLevel}
           </Badge>
         )}
+        
         {product.waterResistant && (
-          <Badge className="bg-blue-500 text-white">
+          <Badge className="bg-blue-500 hover:bg-blue-600 text-white">
             <Droplets size={16} className="mr-1" /> Vodotěsný
+          </Badge>
+        )}
+        
+        {product.documentProtection && (
+          <Badge variant="outline" className="border-green-500 text-green-400">
+            <FileText size={16} className="mr-1" /> {product.documentProtection}
           </Badge>
         )}
       </div>
       
-      <p className="text-gray-700 mb-6">{product.description}</p>
+      <p className="text-gray-300 mb-6">{product.description}</p>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         {product.dimensions && (
-          <div>
-            <h3 className="font-semibold mb-1">Rozměry:</h3>
-            <p className="text-gray-700">
+          <div className="bg-esejfy-dark-primary p-3 rounded-md">
+            <h3 className="font-semibold mb-1 text-gray-300 flex items-center">
+              <Info size={16} className="mr-2 text-esejfy-burgundy" />
+              Rozměry:
+            </h3>
+            <p className="text-white">
               {product.dimensions.width} × {product.dimensions.height} × {product.dimensions.depth} cm
             </p>
           </div>
         )}
         
         {product.weight && (
-          <div>
-            <h3 className="font-semibold mb-1">Hmotnost:</h3>
-            <p className="text-gray-700">{product.weight} kg</p>
+          <div className="bg-esejfy-dark-primary p-3 rounded-md">
+            <h3 className="font-semibold mb-1 text-gray-300 flex items-center">
+              <Scale size={16} className="mr-2 text-esejfy-burgundy" />
+              Hmotnost:
+            </h3>
+            <p className="text-white">{product.weight} kg</p>
           </div>
         )}
         
         {product.lockType && (
-          <div>
-            <h3 className="font-semibold mb-1">Typ zámku:</h3>
-            <div className="flex items-center">
-              <Lock size={16} className="mr-1 text-esejfy-burgundy" /> 
-              <p className="text-gray-700">{product.lockType}</p>
-            </div>
+          <div className="bg-esejfy-dark-primary p-3 rounded-md">
+            <h3 className="font-semibold mb-1 text-gray-300 flex items-center">
+              <Lock size={16} className="mr-2 text-esejfy-burgundy" />
+              Typ zámku:
+            </h3>
+            <p className="text-white">{product.lockType}</p>
           </div>
         )}
         
         {product.keyCapacity && (
-          <div>
-            <h3 className="font-semibold mb-1">Kapacita klíčů:</h3>
-            <p className="text-gray-700">{product.keyCapacity} kusů</p>
+          <div className="bg-esejfy-dark-primary p-3 rounded-md">
+            <h3 className="font-semibold mb-1 text-gray-300 flex items-center">
+              <Info size={16} className="mr-2 text-esejfy-burgundy" />
+              Kapacita klíčů:
+            </h3>
+            <p className="text-white">{product.keyCapacity} kusů</p>
           </div>
         )}
         
         {product.fireProtectionTime && (
-          <div>
-            <h3 className="font-semibold mb-1">Doba ohnivzdornosti:</h3>
-            <div className="flex items-center">
-              <Flame size={16} className="mr-1 text-orange-600" />
-              <p className="text-gray-700">{product.fireProtectionTime} minut</p>
-            </div>
-          </div>
-        )}
-        
-        {product.documentProtection && (
-          <div>
-            <h3 className="font-semibold mb-1">Stupeň utajení:</h3>
-            <p className="text-gray-700">{product.documentProtection}</p>
+          <div className="bg-esejfy-dark-primary p-3 rounded-md">
+            <h3 className="font-semibold mb-1 text-gray-300 flex items-center">
+              <Flame size={16} className="mr-2 text-orange-500" />
+              Doba ohnivzdornosti:
+            </h3>
+            <p className="text-white">{product.fireProtectionTime} minut</p>
           </div>
         )}
         
         {product.installationType && (
-          <div>
-            <h3 className="font-semibold mb-1">Typ instalace:</h3>
-            <p className="text-gray-700">
-              {product.installationType === 'wall' && 'Do zdi'}
-              {product.installationType === 'floor' && 'Do podlahy'}
-              {product.installationType === 'furniture' && 'Nábytkový'}
-              {product.installationType === 'door' && 'Trezorové dveře'}
+          <div className="bg-esejfy-dark-primary p-3 rounded-md">
+            <h3 className="font-semibold mb-1 text-gray-300 flex items-center">
+              <Info size={16} className="mr-2 text-esejfy-burgundy" />
+              Typ instalace:
+            </h3>
+            <p className="text-white">
+              {getInstallationTypeLabel(product.installationType)}
             </p>
           </div>
         )}
         
         {formattedInsurance && (
-          <div>
-            <h3 className="font-semibold mb-1">Doporučená pojistná částka:</h3>
-            <p className="text-gray-700">{formattedInsurance}</p>
+          <div className="bg-esejfy-dark-primary p-3 rounded-md">
+            <h3 className="font-semibold mb-1 text-gray-300 flex items-center">
+              <Info size={16} className="mr-2 text-esejfy-burgundy" />
+              Doporučená pojistná částka:
+            </h3>
+            <p className="text-white">{formattedInsurance}</p>
           </div>
         )}
       </div>
@@ -148,19 +208,21 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
         <div className="flex items-baseline mb-2">
           <span className="text-2xl font-bold text-esejfy-burgundy">{formattedPrice}</span>
           {formattedOriginalPrice && (
-            <span className="ml-3 text-lg text-gray-500 line-through">{formattedOriginalPrice}</span>
+            <span className="ml-3 text-lg text-gray-400 line-through">{formattedOriginalPrice}</span>
           )}
         </div>
-        <p className="text-sm text-gray-500 mb-4">Včetně DPH</p>
+        <p className="text-sm text-gray-400 mb-4">Včetně DPH</p>
         
         <div className="flex items-center mb-6">
           <div className={`w-3 h-3 rounded-full mr-2 ${product.inStock ? 'bg-green-500' : 'bg-red-500'}`}></div>
-          <span>{product.inStock ? 'Skladem' : 'Momentálně nedostupné'}</span>
+          <span className={product.inStock ? 'text-green-400' : 'text-red-400'}>
+            {product.inStock ? 'Skladem' : 'Momentálně nedostupné'}
+          </span>
         </div>
         
         {product.inStock && (
           <div className="flex items-center gap-4">
-            <div className="flex items-center border rounded-md">
+            <div className="flex items-center border border-gray-700 rounded-md bg-esejfy-dark-primary">
               <Button
                 variant="ghost"
                 size="icon"
@@ -189,14 +251,14 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
           </div>
         )}
         
-        <div className="mt-6 border-t pt-4">
+        <div className="mt-6 border-t border-gray-700 pt-4">
           <div className="flex items-center gap-2 mb-2">
             <Truck size={18} className="text-esejfy-burgundy" />
-            <span>Doprava zdarma při objednávce nad 5 000 Kč</span>
+            <span className="text-gray-300">Doprava zdarma při objednávce nad 5 000 Kč</span>
           </div>
           <div className="flex items-center gap-2">
             <Package size={18} className="text-esejfy-burgundy" />
-            <span>Osobní odběr na prodejně zdarma</span>
+            <span className="text-gray-300">Osobní odběr na prodejně zdarma</span>
           </div>
         </div>
       </div>

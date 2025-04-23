@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Product } from '@/types/product';
-import { ShieldCheck, Flame } from 'lucide-react';
+import { ShieldCheck, Flame, Droplets, Lock } from 'lucide-react';
 
 interface ProductCardProps {
   product: Product;
@@ -31,7 +31,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     Math.round((1 - product.price / product.originalPrice) * 100) : null;
 
   return (
-    <Card className="overflow-hidden h-full border border-gray-200 product-card transition-all">
+    <Card className="overflow-hidden h-full border border-gray-700 bg-esejfy-dark-secondary product-card transition-all hover:border-esejfy-burgundy">
       <Link to={`/product/${product.slug}`}>
         <div className="relative h-48 overflow-hidden">
           <img 
@@ -55,17 +55,27 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <div className="flex flex-col h-full justify-between">
           <div>
             <Link to={`/product/${product.slug}`} className="hover:text-esejfy-burgundy transition-colors">
-              <h3 className="font-semibold mb-2">{product.name}</h3>
+              <h3 className="font-semibold mb-2 text-white">{product.name}</h3>
             </Link>
             <div className="flex flex-wrap gap-2 mb-3">
               {product.safeClass && (
-                <Badge variant="outline" className="flex items-center gap-1 text-xs">
+                <Badge variant="outline" className="flex items-center gap-1 text-xs border-blue-500 text-blue-400">
                   <ShieldCheck size={12} /> Třída {product.safeClass}
                 </Badge>
               )}
               {product.fireResistance && (
-                <Badge variant="outline" className="flex items-center gap-1 text-xs">
+                <Badge variant="outline" className="flex items-center gap-1 text-xs border-orange-500 text-orange-400">
                   <Flame size={12} /> {product.fireResistance}
+                </Badge>
+              )}
+              {product.waterResistant && (
+                <Badge variant="outline" className="flex items-center gap-1 text-xs border-blue-500 text-blue-400">
+                  <Droplets size={12} /> Vodotěsný
+                </Badge>
+              )}
+              {product.lockType && (
+                <Badge variant="outline" className="flex items-center gap-1 text-xs border-gray-500 text-gray-400">
+                  <Lock size={12} /> {product.lockType === 'electronic' ? 'Elektronický zámek' : 'Klíčový zámek'}
                 </Badge>
               )}
             </div>
@@ -74,7 +84,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             <div className="flex items-baseline">
               <span className="text-lg font-bold text-esejfy-burgundy">{formattedPrice}</span>
               {formattedOriginalPrice && (
-                <span className="ml-2 text-sm text-gray-500 line-through">{formattedOriginalPrice}</span>
+                <span className="ml-2 text-sm text-gray-400 line-through">{formattedOriginalPrice}</span>
               )}
             </div>
             <div className="mt-3">

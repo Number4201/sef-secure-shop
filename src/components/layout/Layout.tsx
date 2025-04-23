@@ -14,9 +14,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const isMobile = useIsMobile();
   
   return (
-    <div className="flex flex-col min-h-screen w-full relative bg-esejfy-dark-primary text-white overflow-x-hidden">
+    <div className="flex flex-col min-h-screen w-full relative bg-esejfy-dark-primary text-white overflow-hidden">
       <Navbar />
-      <main className="flex-grow relative">
+      <main className="flex-grow relative w-full max-w-[100vw]">
         {children}
       </main>
       <Suspense fallback={<div className="h-16 bg-esejfy-dark-secondary"></div>}>
