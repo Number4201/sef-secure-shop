@@ -33,6 +33,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose }) => {
   const totalItems = getTotalItems();
   const totalPrice = getTotalPrice();
   const isFreeShipping = totalPrice >= 5000;
+  const remainingForFreeShipping = 5000 - totalPrice;
 
   return (
     <Sheet open={open} onOpenChange={onClose}>
@@ -54,8 +55,22 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose }) => {
           </div>
         ) : (
           <>
-            <div className="flex-1 overflow-y-auto py-6 px-6">
-              <div className="space-y-6">
+            <div className="flex-1 overflow-y-auto py-4 px-6">
+              {!isFreeShipping && (
+                <div className="mb-4 bg-blue-50 p-3 rounded-lg text-sm">
+                  <div className="text-blue-700 mb-1">
+                    Do dopravy zdarma zbývá {formatPrice(remainingForFreeShipping)}
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div 
+                      className="bg-blue-600 h-2 rounded-full" 
+                      style={{ width: `${(totalPrice / 5000) * 100}%` }}
+                    ></div>
+                  </div>
+                </div>
+              )}
+
+              <div className="space-y-4">
                 {cart.map((item) => (
                   <CartItem 
                     key={item.id} 
@@ -68,12 +83,6 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose }) => {
             </div>
 
             <div className="border-t px-6 py-4 bg-gray-50">
-              {!isFreeShipping && (
-                <div className="mb-4 text-sm text-gray-600">
-                  Do dopravy zdarma zbývá {formatPrice(5000 - totalPrice)}
-                </div>
-              )}
-              
               <div className="mb-4">
                 <div className="flex justify-between text-base font-semibold">
                   <span>Celkem:</span>
@@ -99,6 +108,12 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose }) => {
                   </Link>
                 </Button>
               </div>
+              
+              {isFreeShipping && (
+                <div className="mt-3 text-sm text-green-600 flex items-center justify-center gap-1">
+                  <span>✓</span> Doprava zdarma
+                </div>
+              )}
             </div>
           </>
         )}
