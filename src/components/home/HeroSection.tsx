@@ -21,7 +21,7 @@ const HeroSection: React.FC = () => {
   };
 
   return (
-    <section className="relative bg-esejfy-dark-secondary text-white">
+    <section className="relative bg-esejfy-burgundy text-white">
       <div className="container mx-auto px-4 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="space-y-6">
@@ -36,7 +36,7 @@ const HeroSection: React.FC = () => {
               <Button 
                 onClick={handleExploreProducts}
                 size={isMobile ? "default" : "lg"}
-                className="bg-esejfy-burgundy hover:bg-esejfy-burgundy/90 text-white font-medium"
+                className="bg-white text-esejfy-burgundy hover:bg-gray-100 font-medium"
               >
                 Prozkoumat produkty
               </Button>
@@ -53,7 +53,7 @@ const HeroSection: React.FC = () => {
               />
             </div>
             
-            <div className="absolute -bottom-5 left-0 right-0 bg-esejfy-dark-accent rounded-lg p-4 mx-4 shadow-lg flex justify-around">
+            <div className="absolute -bottom-5 left-0 right-0 bg-white rounded-lg p-4 mx-4 shadow-lg flex justify-around">
               <FeatureInfo icon={<Shield size={24} />} text="Certifikováno" />
               <FeatureInfo icon={<Lock size={24} />} text="Zabezpečeno" />
               <FeatureInfo icon={<Flame size={24} />} text="Ohnivzdorné" />
@@ -72,7 +72,7 @@ const HeroSection: React.FC = () => {
         >
           <path
             d="M1440 74V21.6542C1314.73 58.6542 1134.25 74 898.669 74C663.084 74 453.822 58.6542 270.881 21.6542C179.406 3.98615 89.7029 -4.91725 0 4.99691V74H1440Z"
-            fill="#1A1F2C"
+            fill="white"
           />
         </svg>
       </div>

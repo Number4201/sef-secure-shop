@@ -15,11 +15,11 @@ const FeaturedProductsSection = React.memo(() => {
   const isMobile = useIsMobile();
   
   return (
-    <section className={`${isMobile ? 'py-12' : 'py-20'} bg-esejfy-dark-primary`}>
+    <section className={`${isMobile ? 'py-12' : 'py-20'} bg-white`}>
       <div className="container mx-auto px-4">
         <div className={`text-center ${isMobile ? 'mb-8' : 'mb-12'}`}>
-          <h2 className={`${isMobile ? 'text-2xl' : 'text-4xl'} font-bold mb-4 text-white`}>Nejprodávanější produkty</h2>
-          <p className="text-gray-300 text-lg max-w-3xl mx-auto">
+          <h2 className={`${isMobile ? 'text-2xl' : 'text-4xl'} font-bold mb-4`}>Nejprodávanější produkty</h2>
+          <p className="text-gray-600 text-lg max-w-3xl mx-auto">
             Objevte naše nejoblíbenější trezory
           </p>
         </div>
@@ -46,7 +46,7 @@ const Index = () => {
   
   return (
     <Layout>
-      <div className="w-full bg-esejfy-dark-primary">
+      <div className="w-full bg-white">
         <HeroSection />
         <CategorySection />
         <FeaturedProductsSection />

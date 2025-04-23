@@ -17,7 +17,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onLinkClick }) => {
   return (
     <div 
       className={cn(
-        "fixed inset-x-0 z-50 bg-esejfy-dark-primary transition-all duration-300 ease-in-out",
+        "fixed inset-x-0 z-50 bg-white transition-all duration-300 ease-in-out",
         isOpen ? "top-16 bottom-0" : "-top-[100vh]"
       )}
     >
@@ -29,13 +29,13 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onLinkClick }) => {
               <Input
                 type="search"
                 placeholder="Hledat produkty..."
-                className="pr-10 bg-esejfy-dark-secondary border-esejfy-dark-accent text-white"
+                className="pr-10"
               />
               <Button 
                 size="icon" 
                 className="absolute right-0 top-0 bg-transparent hover:bg-transparent"
               >
-                <Search size={18} className="text-gray-300" />
+                <Search size={18} className="text-gray-500" />
               </Button>
             </div>
           </div>
@@ -44,7 +44,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onLinkClick }) => {
           <nav className="flex flex-col space-y-1">
             <Link 
               to="/" 
-              className="px-3 py-3 hover:bg-esejfy-dark-secondary text-white rounded-md"
+              className="px-3 py-3 hover:bg-gray-100 rounded-md"
               onClick={onLinkClick}
             >
               Domů
@@ -52,13 +52,13 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onLinkClick }) => {
             
             {/* Products section */}
             <div className="mb-1">
-              <div className="px-3 py-2 font-medium text-white">Produkty</div>
+              <div className="px-3 py-2 font-medium">Produkty</div>
               <div className="pl-3 space-y-1">
                 {categories.map((category) => (
                   <Link 
                     key={category.path}
                     to={category.path}
-                    className="block py-2 px-3 hover:bg-esejfy-dark-secondary text-gray-300 rounded-md text-sm"
+                    className="block py-2 px-3 hover:bg-gray-100 rounded-md text-sm"
                     onClick={onLinkClick}
                   >
                     {category.name}
@@ -69,7 +69,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onLinkClick }) => {
             
             <Link 
               to="/blog" 
-              className="px-3 py-3 hover:bg-esejfy-dark-secondary text-white rounded-md"
+              className="px-3 py-3 hover:bg-gray-100 rounded-md"
               onClick={onLinkClick}
             >
               Blog
@@ -77,24 +77,24 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onLinkClick }) => {
             
             <Link 
               to="/o-nas" 
-              className="px-3 py-3 hover:bg-esejfy-dark-secondary text-white rounded-md"
+              className="px-3 py-3 hover:bg-gray-100 rounded-md"
               onClick={onLinkClick}
             >
               O nás
             </Link>
             <Link 
               to="/kontakt" 
-              className="px-3 py-3 hover:bg-esejfy-dark-secondary text-white rounded-md"
+              className="px-3 py-3 hover:bg-gray-100 rounded-md"
               onClick={onLinkClick}
             >
               Kontakt
             </Link>
             
             {/* Contact info */}
-            <div className="mt-4 bg-esejfy-dark-secondary p-3 rounded-md">
-              <div className="text-sm font-medium mb-2 text-white">Kontakt</div>
-              <div className="text-sm mb-1 text-gray-300">info@esejfy.net</div>
-              <div className="text-sm text-gray-300">+420 123 456 789</div>
+            <div className="mt-4 bg-gray-50 p-3 rounded-md">
+              <div className="text-sm font-medium mb-2">Kontakt</div>
+              <div className="text-sm mb-1">info@esejfy.net</div>
+              <div className="text-sm">+420 123 456 789</div>
             </div>
           </nav>
         </div>
@@ -104,10 +104,10 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onLinkClick }) => {
           variant="outline"
           size="icon"
           onClick={onLinkClick}
-          className="absolute top-2 right-2 border-esejfy-dark-accent hover:bg-esejfy-dark-secondary"
+          className="absolute top-2 right-2"
           aria-label="Zavřít menu"
         >
-          <X size={18} className="text-white" />
+          <X size={18} />
         </Button>
       </ScrollArea>
     </div>

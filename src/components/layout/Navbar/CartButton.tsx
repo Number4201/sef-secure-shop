@@ -15,10 +15,10 @@ const CartButton = () => {
         variant="ghost" 
         size="icon" 
         onClick={() => setIsCartOpen(true)}
-        className="hover:bg-esejfy-dark-secondary relative"
+        className="hover:bg-esejfy-lightgray relative"
         aria-label="Košík"
       >
-        <ShoppingCart size={20} className="text-white" />
+        <ShoppingCart size={20} />
         <span className="absolute top-0 right-0 bg-esejfy-burgundy text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
           {getTotalItems()}
         </span>
