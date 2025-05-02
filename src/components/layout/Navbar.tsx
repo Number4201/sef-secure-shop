@@ -73,13 +73,15 @@ const Navbar: React.FC = () => {
       <div className="bg-white shadow-sm">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
-            {/* Logo */}
+            {/* Logo with improved visibility */}
             <Link to="/" className="flex items-center">
-              <img 
-                src="/lovable-uploads/7b944fb8-655b-4973-9817-efca20874478.png" 
-                alt="eSEJFY.net" 
-                className="h-8"
-              />
+              <div className="bg-white rounded p-1">
+                <img 
+                  src="/lovable-uploads/7b944fb8-655b-4973-9817-efca20874478.png" 
+                  alt="eSEJFY.net" 
+                  className="h-8 object-contain"
+                />
+              </div>
             </Link>
             
             {/* Desktop Navigation */}
