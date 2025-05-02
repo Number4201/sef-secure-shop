@@ -3,6 +3,8 @@ import { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { CartProvider } from './hooks/use-cart';
 import { Toaster } from './components/ui/toaster';
+import { AuthProvider } from './contexts/AuthContext';
+import CookieConsent from './components/cookie/CookieConsent';
 
 // Lazy load pages for better initial load performance
 const IndexPage = lazy(() => import('./pages/Index'));
@@ -13,6 +15,7 @@ const BlogPage = lazy(() => import('./pages/Blog'));
 const BlogPostPage = lazy(() => import('./pages/BlogPost'));
 const AboutUsPage = lazy(() => import('./pages/AboutUs'));
 const ContactPage = lazy(() => import('./pages/Contact'));
+const AuthCallbackPage = lazy(() => import('./pages/AuthCallback'));
 const NotFoundPage = lazy(() => import('./pages/NotFound'));
 
 // Loading fallback
@@ -25,24 +28,28 @@ const PageLoader = () => (
 function App() {
   return (
     <Router>
-      <CartProvider>
-        <div className="overflow-hidden w-full max-w-[100vw]">
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
-              <Route path="/" element={<IndexPage />} />
-              <Route path="/products" element={<ProductsPage />} />
-              <Route path="/product/:slug" element={<ProductDetailPage />} />
-              <Route path="/cart" element={<CartPage />} />
-              <Route path="/blog" element={<BlogPage />} />
-              <Route path="/blog/:slug" element={<BlogPostPage />} />
-              <Route path="/o-nas" element={<AboutUsPage />} />
-              <Route path="/kontakt" element={<ContactPage />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
-          </Suspense>
-          <Toaster />
-        </div>
-      </CartProvider>
+      <AuthProvider>
+        <CartProvider>
+          <div className="overflow-hidden w-full max-w-[100vw]">
+            <CookieConsent />
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                <Route path="/" element={<IndexPage />} />
+                <Route path="/products" element={<ProductsPage />} />
+                <Route path="/product/:slug" element={<ProductDetailPage />} />
+                <Route path="/cart" element={<CartPage />} />
+                <Route path="/blog" element={<BlogPage />} />
+                <Route path="/blog/:slug" element={<BlogPostPage />} />
+                <Route path="/o-nas" element={<AboutUsPage />} />
+                <Route path="/kontakt" element={<ContactPage />} />
+                <Route path="/auth/callback" element={<AuthCallbackPage />} />
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </Suspense>
+            <Toaster />
+          </div>
+        </CartProvider>
+      </AuthProvider>
     </Router>
   );
 }

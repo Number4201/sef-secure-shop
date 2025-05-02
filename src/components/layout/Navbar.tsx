@@ -4,15 +4,19 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu, Search, User, ShoppingCart } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useAuth } from '@/contexts/AuthContext';
 import NavLinks from './Navbar/NavLinks';
 import SearchBar from './Navbar/SearchBar';
 import MobileMenu from './Navbar/MobileMenu';
 import CartButton from './Navbar/CartButton';
+import LoginDialog from '../auth/LoginDialog';
+import UserMenu from '../auth/UserMenu';
 
 const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const isMobile = useIsMobile();
+  const { user, loading } = useAuth();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -35,13 +39,33 @@ const Navbar: React.FC = () => {
     <header className="sticky top-0 z-50 w-full">
       {/* Top bar with contact info */}
       <div className="flex justify-end items-center h-10 px-4 bg-esejfy-burgundy text-white text-sm">
-        <div className="container mx-auto flex justify-end items-center space-x-4">
-          <a href="mailto:info@esejfy.net" className="hover:underline">
-            info@esejfy.net
-          </a>
-          <a href="tel:+420123456789" className="hover:underline">
-            +420 123 456 789
-          </a>
+        <div className="container mx-auto flex justify-between items-center">
+          <div></div> {/* Empty div for flexbox spacing */}
+          <div className="flex items-center space-x-4">
+            <a href="mailto:info@esejfy.net" className="hover:underline">
+              info@esejfy.net
+            </a>
+            <a href="tel:+420123456789" className="hover:underline">
+              +420 123 456 789
+            </a>
+            {loading ? (
+              <div className="h-6 w-24 bg-white/20 animate-pulse rounded"></div>
+            ) : user ? (
+              <UserMenu />
+            ) : (
+              <LoginDialog 
+                trigger={
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="bg-transparent border-white text-white hover:bg-white hover:text-esejfy-burgundy transition-colors"
+                  >
+                    Přihlášení
+                  </Button>
+                }
+              />
+            )}
+          </div>
         </div>
       </div>
 
@@ -75,15 +99,19 @@ const Navbar: React.FC = () => {
                 </Button>
               )}
               
-              {!isMobile && (
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
-                  className="hover:bg-gray-100 h-10 w-10 p-2"
-                  aria-label="Účet"
-                >
-                  <User size={18} />
-                </Button>
+              {!isMobile && !user && (
+                <LoginDialog 
+                  trigger={
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      className="hover:bg-gray-100 h-10 w-10 p-2"
+                      aria-label="Účet"
+                    >
+                      <User size={18} />
+                    </Button>
+                  }
+                />
               )}
               
               <CartButton />
