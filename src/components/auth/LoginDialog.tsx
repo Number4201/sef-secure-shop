@@ -13,7 +13,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { signInWithEmail, signInWithGoogle, signUpWithEmail } from '@/services/auth';
-import { toast } from '@/components/ui';
+import { toast } from '@/hooks/use-toast';
 
 interface LoginDialogProps {
   trigger?: React.ReactNode;
@@ -37,18 +37,33 @@ const LoginDialog: React.FC<LoginDialogProps> = ({ trigger }) => {
     }
 
     try {
+      // For demo purposes, handle login/register success
       const { error } = isRegister 
         ? await signUpWithEmail(email, password)
         : await signInWithEmail(email, password);
         
       if (error) throw error;
       
-      // Success
+      // Success - This would be replaced with actual backend response handling
       setIsOpen(false);
+      
+      // Simulate login for demo purposes
+      const mockUser = {
+        id: '1',
+        email,
+        user_metadata: {
+          full_name: email.split('@')[0],
+          avatar_url: ''
+        }
+      };
+      
+      localStorage.setItem('demo_auth_user', JSON.stringify(mockUser));
+      window.location.reload(); // Reload to pickup the auth changes
+      
       toast({
         title: isRegister ? "Registrace úspěšná" : "Přihlášení úspěšné",
         description: isRegister 
-          ? "Váš účet byl vytvořen. Ověřte prosím svůj e-mail." 
+          ? "Váš účet byl vytvořen." 
           : "Vítejte zpět!",
       });
     } catch (error: any) {
@@ -63,8 +78,10 @@ const LoginDialog: React.FC<LoginDialogProps> = ({ trigger }) => {
 
   const handleGoogleSignIn = async () => {
     try {
-      const { error } = await signInWithGoogle();
-      if (error) throw error;
+      // Store the current location to return after auth
+      localStorage.setItem('authReturnTo', window.location.pathname);
+      
+      await signInWithGoogle();
       setIsOpen(false);
     } catch (error: any) {
       console.error('Google sign-in error:', error);

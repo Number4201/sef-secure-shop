@@ -1,7 +1,7 @@
 
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { toast } from '@/components/ui';
+import { toast } from '@/hooks/use-toast';
 
 const AuthCallback: React.FC = () => {
   const navigate = useNavigate();
@@ -9,8 +9,20 @@ const AuthCallback: React.FC = () => {
   useEffect(() => {
     const handleRedirect = async () => {
       try {
-        // The hash fragment or query string contains the authentication result
-        // Supabase client will automatically handle this when loaded
+        // This is a placeholder for handling the OAuth callback from your backend
+        console.log('Auth callback would handle OAuth response here');
+        
+        // Simulate successful login for demo purposes
+        const mockUser = {
+          id: '1',
+          email: 'google-user@example.com',
+          user_metadata: {
+            full_name: 'Google User',
+            avatar_url: ''
+          }
+        };
+        
+        localStorage.setItem('demo_auth_user', JSON.stringify(mockUser));
         
         // Navigate back to the home page or the page they were on before
         const returnTo = localStorage.getItem('authReturnTo') || '/';
