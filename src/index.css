@@ -1,12 +1,13 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    /* Dark mode inspired colors */
-    --background: 220 20% 10%;  /* Very dark background */
-    --foreground: 0 0% 98%;
+    /* Security-focused color scheme */
+    --background: 220 20% 97%;  /* Very light gray background */
+    --foreground: 220 25% 20%;  /* Dark blue-gray text for readability */
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -14,28 +15,30 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
+    /* Use burgundy color from eSEJFY for primary */
     --primary: 340 74% 31%;
     --primary-foreground: 0 0% 98%;
 
-    /* Darker secondary and accent colors */
-    --secondary: 220 15% 15%;
-    --secondary-foreground: 0 0% 90%;
+    /* Supporting colors for a secure feel */
+    --secondary: 220 25% 96%;
+    --secondary-foreground: 220 25% 20%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 220 20% 94%;
+    --muted-foreground: 220 15% 40%;
 
-    --accent: 220 15% 20%;
-    --accent-foreground: 0 0% 85%;
+    --accent: 220 15% 92%;
+    --accent-foreground: 220 25% 20%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
+    --border: 220 15% 85%;
+    --input: 220 15% 85%;
     --ring: 340 74% 31%;
 
     --radius: 0.5rem;
 
+    /* Sidebar colors */
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
@@ -47,41 +50,44 @@
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    /* Dark theme with secure feeling */
+    --background: 222.2 25% 9%;
     --foreground: 210 40% 98%;
 
-    --card: 222.2 84% 4.9%;
+    --card: 222.2 25% 12%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 222.2 84% 4.9%;
+    --popover: 222.2 25% 10%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 340 74% 40%; /* Brighter eSEJFY burgundy for dark mode */
+    /* Slightly brighter burgundy for better visibility in dark mode */
+    --primary: 340 74% 40%;
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 217.2 32.6% 17.5%;
+    --secondary: 217.2 22% 16%;
     --secondary-foreground: 210 40% 98%;
 
-    --muted: 217.2 32.6% 17.5%;
+    --muted: 217.2 22% 18%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 217.2 32.6% 17.5%;
+    --accent: 217.2 24% 20%;
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
+    --border: 217.2 22% 22%;
+    --input: 217.2 22% 22%;
     --ring: 212.7 26.8% 83.9%;
     
-    --sidebar-background: 240 5.9% 10%;
+    /* Dark sidebar colors */
+    --sidebar-background: 220 25% 13%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent: 217 20% 20%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-border: 217 20% 24%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
@@ -94,7 +100,7 @@
 
   html, body, #root {
     @apply bg-esejfy-dark-primary text-white;
-    background-color: #0D0D14;  /* Match the new dark primary */
+    background-color: #171928;  /* Match the new dark primary */
     color: #f4f4f4;  /* Slightly softer white for better readability */
     overflow-x: hidden;
     width: 100%;
@@ -112,16 +118,16 @@
     padding: 0;
   }
 
-  /* Custom transitions for hover effects */
+  /* Security-focused styling enhancements */
   .product-card {
-    @apply transition-all duration-300 ease-in-out;
+    @apply transition-all duration-300 ease-in-out shadow-sm;
   }
   
   .product-card:hover {
-    @apply shadow-lg transform -translate-y-1;
+    @apply shadow-md transform -translate-y-1;
   }
   
-  /* Animated underline for links */
+  /* Animated underline for links - using burgundy color */
   .animated-underline {
     @apply relative inline-block;
   }
@@ -157,5 +163,15 @@
     .mobile-simple p {
       font-size: 1rem !important;
     }
+  }
+
+  /* Trust indicators */
+  .trust-indicator {
+    @apply flex items-center gap-2 py-1 px-2 bg-esejfy-lightgray/10 rounded-md text-sm;
+  }
+
+  /* Card with security-focused styling */
+  .security-card {
+    @apply border border-esejfy-gray/20 rounded-lg shadow-sm hover:shadow-md transition-all duration-300;
   }
 }

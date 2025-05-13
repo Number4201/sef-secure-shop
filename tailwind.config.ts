@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -63,15 +64,19 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				esejfy: {
-					burgundy: '#8A1538',
-					gray: '#1A1F2C',  // Darker gray
-					lightgray: '#2A2F3C', // Darker light gray
-					blue: '#3C6E91',
+					burgundy: '#8A1538', // Keeping original burgundy color
+					navy: '#1A2642', // Slightly adjusted navy for better security feeling
+					gray: '#333842',  // Refined dark gray
+					lightgray: '#EAEAEC', // Light gray for backgrounds
+					blue: '#3C6E91',  // Trust-inspiring blue
+					steel: '#5D6E81',  // Steel blue-gray for accents
+					platinum: '#E6E7E9', // Very light gray that works with burgundy
+					// Dark theme colors
 					dark: {
-            primary: '#0D0D14',     // Darker primary background
-            secondary: '#1A1F2C',   // Dark secondary background
-            accent: '#2A2F3C',      // Dark accent color
-          }
+						primary: '#171928',     // Darker primary background
+						secondary: '#212333',   // Dark secondary background
+						accent: '#2D3043',      // Dark accent color
+					}
 				}
 			},
 			borderRadius: {
