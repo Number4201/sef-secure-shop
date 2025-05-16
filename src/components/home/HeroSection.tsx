@@ -16,7 +16,7 @@ const HeroSection: React.FC = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [searchQuery, setSearchQuery] = useState('');
-  
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
@@ -25,7 +25,7 @@ const HeroSection: React.FC = () => {
   };
 
   return (
-    <section className="relative bg-esejfy-burgundy text-white">
+    <section className="relative bg-esejfy-burgundy text-white pb-16 md:pb-20">
       <div className="container mx-auto px-4 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="space-y-6">
@@ -35,7 +35,7 @@ const HeroSection: React.FC = () => {
             <p className="text-lg opacity-90 text-white">
               Profesionální trezory a sejfy s certifikovanou ochranou pro vaše cennosti, dokumenty a zbraně.
             </p>
-            
+
             <form onSubmit={handleSearch} className="relative max-w-xl">
               <Input
                 type="search"
@@ -45,7 +45,7 @@ const HeroSection: React.FC = () => {
                 className="w-full h-12 pl-12 pr-4 rounded-lg bg-white/10 border-white/20 text-white placeholder:text-white/60 focus:bg-white/15 focus:border-white/30"
               />
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
-              <Button 
+              <Button
                 type="submit"
                 className="absolute right-2 top-1/2 -translate-y-1/2 bg-white text-esejfy-burgundy hover:bg-gray-100"
                 size="sm"
@@ -54,14 +54,14 @@ const HeroSection: React.FC = () => {
               </Button>
             </form>
           </div>
-          
+
           <div className="relative">
             <div className="rounded-lg overflow-hidden shadow-2xl bg-black h-[400px]">
               <div className="absolute top-4 right-4 bg-[#222] text-[#ea384c] px-3 py-1 rounded-md text-sm font-bold">
                 Reklama
               </div>
             </div>
-            
+
             <div className="absolute -bottom-5 left-0 right-0 bg-white rounded-lg p-4 mx-4 shadow-lg flex justify-around">
               <FeatureInfo icon={<Shield size={24} />} text="Certifikováno" />
               <FeatureInfo icon={<Lock size={24} />} text="Zabezpečeno" />
@@ -69,21 +69,6 @@ const HeroSection: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
-      
-      {/* Vlna na spodní části sekce */}
-      <div className="absolute bottom-0 left-0 right-0 h-16 overflow-hidden">
-        <svg
-          className="absolute bottom-0 w-full h-full"
-          viewBox="0 0 1440 74"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M1440 74V21.6542C1314.73 58.6542 1134.25 74 898.669 74C663.084 74 453.822 58.6542 270.881 21.6542C179.406 3.98615 89.7029 -4.91725 0 4.99691V74H1440Z"
-            fill="white"
-          />
-        </svg>
       </div>
     </section>
   );

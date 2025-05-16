@@ -38,19 +38,19 @@ const TestimonialCard: React.FC<TestimonialProps> = ({ quote, author, position, 
         {/* Rating stars */}
         <div className="flex mb-4">
           {Array.from({ length: 5 }).map((_, i) => (
-            <Star 
-              key={i} 
-              size={18} 
+            <Star
+              key={i}
+              size={18}
               className={i < rating ? "text-yellow-500 fill-yellow-500" : "text-gray-300"}
             />
           ))}
         </div>
-        
+
         {/* Quote */}
         <blockquote className="flex-grow">
           <p className="text-gray-700 italic mb-4">{quote}</p>
         </blockquote>
-        
+
         {/* Author info */}
         <footer>
           <p className="font-semibold">{author}</p>
@@ -63,7 +63,7 @@ const TestimonialCard: React.FC<TestimonialProps> = ({ quote, author, position, 
 
 const TestimonialSection: React.FC = () => {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-4">Co o nás říkají naši zákazníci</h2>
@@ -71,7 +71,7 @@ const TestimonialSection: React.FC = () => {
             Přečtěte si recenze od spokojených zákazníků, kteří si vybrali naše trezory pro zabezpečení svých cenností
           </p>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {testimonials.map((testimonial, index) => (
             <TestimonialCard key={index} {...testimonial} />

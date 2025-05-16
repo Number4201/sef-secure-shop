@@ -37,62 +37,45 @@ const Navbar: React.FC = () => {
 
   return (
     <header className="sticky top-0 z-50 w-full">
-      {/* Top bar with contact info */}
-      <div className="flex justify-end items-center h-10 px-4 bg-esejfy-burgundy text-white text-sm">
-        <div className="container mx-auto flex justify-between items-center">
-          <div></div> {/* Empty div for flexbox spacing */}
-          <div className="flex items-center space-x-4">
-            <a href="mailto:info@esejfy.net" className="hover:underline">
-              info@esejfy.net
-            </a>
-            <a href="tel:+420123456789" className="hover:underline">
-              +420 123 456 789
-            </a>
-            {loading ? (
-              <div className="h-6 w-24 bg-white/20 animate-pulse rounded"></div>
-            ) : user ? (
-              <UserMenu />
-            ) : (
-              <LoginDialog 
-                trigger={
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="bg-transparent border-white text-white hover:bg-white hover:text-esejfy-burgundy transition-colors"
-                  >
-                    Přihlášení
-                  </Button>
-                }
-              />
-            )}
-          </div>
-        </div>
-      </div>
-
       {/* Main navbar */}
       <div className="bg-white shadow-sm">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
-            {/* Logo with improved visibility */}
-            <Link to="/" className="flex items-center">
-              <div className="bg-white rounded p-1">
-                <img 
-                  src="/lovable-uploads/7b944fb8-655b-4973-9817-efca20874478.png" 
-                  alt="eSEJFY.net" 
-                  className="h-8 object-contain"
-                />
-              </div>
-            </Link>
-            
+            {/* Logo and contact info */}
+            <div className="flex items-center">
+              <Link to="/" className="flex items-center mr-4">
+                <div className="bg-white rounded p-1">
+                  <img
+                    src="/lovable-uploads/7b944fb8-655b-4973-9817-efca20874478.png"
+                    alt="eSEJFY.net"
+                    className="h-8 object-contain"
+                  />
+                </div>
+              </Link>
+
+              {/* Contact info - visible on desktop only */}
+              {!isMobile && (
+                <div className="flex items-center space-x-4 text-esejfy-burgundy text-sm ml-4">
+                  <a href="mailto:info@esejfy.net" className="hover:underline flex items-center">
+                    <span className="hidden xl:inline">info@esejfy.net</span>
+                    <span className="xl:hidden">Email</span>
+                  </a>
+                  <a href="tel:+420123456789" className="hover:underline flex items-center">
+                    <span>+420 123 456 789</span>
+                  </a>
+                </div>
+              )}
+            </div>
+
             {/* Desktop Navigation */}
             {!isMobile && <NavLinks />}
-            
+
             {/* Action buttons */}
             <div className="flex items-center space-x-1">
               {!isMobile && (
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
+                <Button
+                  variant="ghost"
+                  size="icon"
                   onClick={toggleSearch}
                   className="hover:bg-gray-100 h-10 w-10 p-2"
                   aria-label="Vyhledat"
@@ -100,29 +83,36 @@ const Navbar: React.FC = () => {
                   <Search size={18} />
                 </Button>
               )}
-              
-              {!isMobile && !user && (
-                <LoginDialog 
+
+              {/* Login button/User menu */}
+              {loading ? (
+                <div className="h-8 w-24 bg-gray-200 animate-pulse rounded"></div>
+              ) : user ? (
+                <UserMenu />
+              ) : (
+                <LoginDialog
                   trigger={
-                    <Button 
-                      variant="ghost" 
-                      size="icon" 
-                      className="hover:bg-gray-100 h-10 w-10 p-2"
-                      aria-label="Účet"
+                    <Button
+                      variant={isMobile ? "ghost" : "outline"}
+                      size="sm"
+                      className={isMobile ?
+                        "hover:bg-gray-100 h-10 w-10 p-2" :
+                        "bg-esejfy-burgundy text-white border-esejfy-burgundy hover:bg-esejfy-burgundy/90"}
+                      aria-label="Přihlášení"
                     >
-                      <User size={18} />
+                      {isMobile ? <User size={18} /> : "Přihlášení"}
                     </Button>
                   }
                 />
               )}
-              
+
               <CartButton />
-              
+
               {/* Mobile menu button */}
               {isMobile && (
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
+                <Button
+                  variant="ghost"
+                  size="icon"
                   className="hover:bg-gray-100 h-10 w-10 p-2"
                   onClick={toggleMobileMenu}
                   aria-label="Menu"
@@ -132,19 +122,19 @@ const Navbar: React.FC = () => {
               )}
             </div>
           </div>
-          
+
           {/* Search bar */}
           {!isMobile && <SearchBar isOpen={isSearchOpen} autoFocus={isSearchOpen} />}
         </div>
       </div>
-      
+
       {/* Mobile menu */}
-      <MobileMenu 
-        isOpen={isMobileMenuOpen} 
+      <MobileMenu
+        isOpen={isMobileMenuOpen}
         onLinkClick={() => {
           setIsMobileMenuOpen(false);
           document.body.style.overflow = '';
-        }} 
+        }}
       />
     </header>
   );

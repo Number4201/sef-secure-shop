@@ -52,7 +52,7 @@ const FeatureCard: React.FC<FeatureProps> = ({ icon, title, description }) => {
 
 const FeaturesSection: React.FC = () => {
   return (
-    <section className="py-12 bg-gradient-to-b from-esejfy-lightgray/50 to-white">
+    <section className="py-16 bg-gradient-to-b from-esejfy-lightgray/50 to-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-8">
           <h2 className="text-2xl font-semibold">Proč si vybrat eSEJFY.net</h2>
@@ -60,7 +60,7 @@ const FeaturesSection: React.FC = () => {
             Nabízíme kompletní služby od výběru vhodného trezoru přes dopravu až po instalaci a servis
           </p>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {features.map((feature, index) => (
             <FeatureCard key={index} {...feature} />

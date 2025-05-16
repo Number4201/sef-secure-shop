@@ -411,20 +411,49 @@ export const products: Product[] = [
   }
 ];
 
-export const getProductsByCategory = (category?: string) => {
+// These functions now use the database service to fetch data
+// They maintain the same API for backward compatibility
+import {
+  fetchProducts,
+  fetchProductBySlug,
+  fetchProductsByCategory,
+  fetchFeaturedProducts,
+  fetchRelatedProducts
+} from '@/services/database';
+
+export const getProductsByCategory = async (category?: string) => {
+  if (!category) return await fetchProducts();
+  return await fetchProductsByCategory(category);
+};
+
+export const getProductBySlug = async (slug: string) => {
+  return await fetchProductBySlug(slug);
+};
+
+export const getFeaturedProducts = async (count = 4) => {
+  return await fetchFeaturedProducts(count);
+};
+
+export const getRelatedProducts = async (currentProductId: string, category: string, count = 4) => {
+  return await fetchRelatedProducts(currentProductId, category, count);
+};
+
+// Synchronous versions for backward compatibility
+// These will be deprecated in the future
+export const getProductsByCategorySync = (category?: string) => {
   if (!category) return products;
   return products.filter(product => product.category === category);
 };
 
-export const getProductBySlug = (slug: string) => {
+export const getProductBySlugSync = (slug: string) => {
   return products.find(product => product.slug === slug);
 };
 
-export const getFeaturedProducts = () => {
+export const getFeaturedProductsSync = () => {
   return products.slice(0, 4);
 };
 
-export const getRelatedProducts = (currentProductId: string, category: string, count = 4) => {
+export const getRelatedProductsSync = (currentProductId: string, category: string, count = 4) => {
   return products
     .filter(product => product.category === category && product.id !== currentProductId)
     .slice(0, count);

@@ -2,7 +2,8 @@
 import React from 'react';
 import Layout from '@/components/layout/Layout';
 import HeroSection from '@/components/home/HeroSection';
-import CategorySection from '@/components/home/CategorySection';
+import CategoryIconsSection from '@/components/home/CategoryIconsSection';
+import FeaturedCategoriesSection from '@/components/home/FeaturedCategoriesSection';
 import ProductGrid from '@/components/products/ProductGrid';
 import FeaturesSection from '@/components/home/FeaturesSection';
 import TestimonialSection from '@/components/home/TestimonialSection';
@@ -11,9 +12,25 @@ import { getFeaturedProducts } from '@/data/products';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const FeaturedProductsSection = React.memo(() => {
-  const featuredProducts = getFeaturedProducts();
+  const [featuredProducts, setFeaturedProducts] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(true);
   const isMobile = useIsMobile();
-  
+
+  React.useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const products = await getFeaturedProducts();
+        setFeaturedProducts(products);
+      } catch (error) {
+        console.error("Error loading featured products:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadProducts();
+  }, []);
+
   return (
     <section className={`${isMobile ? 'py-12' : 'py-20'} bg-white`}>
       <div className="container mx-auto px-4">
@@ -23,12 +40,18 @@ const FeaturedProductsSection = React.memo(() => {
             Objevte naše nejoblíbenější trezory
           </p>
         </div>
-        
-        <ProductGrid products={featuredProducts} />
-        
+
+        {isLoading ? (
+          <div className="flex justify-center items-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-esejfy-burgundy"></div>
+          </div>
+        ) : (
+          <ProductGrid products={featuredProducts} />
+        )}
+
         <div className="text-center mt-8">
-          <a 
-            href="/products" 
+          <a
+            href="/products"
             className="inline-flex items-center text-lg text-esejfy-burgundy hover:text-esejfy-burgundy/80 font-medium animated-underline"
           >
             Zobrazit všechny produkty
@@ -43,12 +66,13 @@ FeaturedProductsSection.displayName = 'FeaturedProductsSection';
 
 const Index = () => {
   const isMobile = useIsMobile();
-  
+
   return (
     <Layout>
       <div className="w-full bg-white">
         <HeroSection />
-        <CategorySection />
+        <CategoryIconsSection />
+        <FeaturedCategoriesSection />
         <FeaturedProductsSection />
         <FeaturesSection />
         {!isMobile && <TestimonialSection />}

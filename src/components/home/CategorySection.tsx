@@ -42,13 +42,13 @@ const categories: CategoryProps[] = [
 
 const CategoryCard: React.FC<CategoryProps> = ({ title, description, image, link }) => {
   const isMobile = useIsMobile();
-  
+
   return (
     <Card className="overflow-hidden border-none product-card group rounded-xl shadow-lg">
       <Link to={link} className="block h-full">
         <div className={`relative ${isMobile ? 'h-40' : 'h-56'}`}>
-          <img 
-            src={image} 
+          <img
+            src={image}
             alt={title}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             loading="lazy"
@@ -70,14 +70,14 @@ const CategoryCard: React.FC<CategoryProps> = ({ title, description, image, link
 
 const CategorySection: React.FC = () => {
   const isMobile = useIsMobile();
-  
+
   return (
-    <section className="py-16 bg-white">
+    <section className="pt-20 pb-16 bg-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-10">
           <h2 className="text-3xl font-bold mb-3">Naše kategorie</h2>
         </div>
-        
+
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
           {categories.map((category, index) => (
             <CategoryCard key={index} {...category} />

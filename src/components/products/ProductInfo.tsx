@@ -2,18 +2,23 @@
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { 
-  ShieldCheck, 
-  Flame, 
-  Package, 
-  Truck, 
-  MinusCircle, 
-  PlusCircle, 
-  Lock, 
+import {
+  ShieldCheck,
+  Flame,
+  Package,
+  Truck,
+  MinusCircle,
+  PlusCircle,
+  Lock,
   Droplets,
   FileText,
   Scale,
-  Info
+  Info,
+  Anchor,
+  Layers,
+  Ruler,
+  Award,
+  BookOpen
 } from 'lucide-react';
 import { Product } from '@/types/product';
 import { useToast } from '@/hooks/use-toast';
@@ -29,25 +34,25 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
   const { toast } = useToast();
   const { addItem } = useCart();
 
-  const formattedPrice = new Intl.NumberFormat('cs-CZ', { 
-    style: 'currency', 
+  const formattedPrice = new Intl.NumberFormat('cs-CZ', {
+    style: 'currency',
     currency: 'CZK',
     minimumFractionDigits: 0,
-    maximumFractionDigits: 0 
+    maximumFractionDigits: 0
   }).format(product.price);
 
-  const formattedOriginalPrice = product.originalPrice ? new Intl.NumberFormat('cs-CZ', { 
-    style: 'currency', 
+  const formattedOriginalPrice = product.originalPrice ? new Intl.NumberFormat('cs-CZ', {
+    style: 'currency',
     currency: 'CZK',
     minimumFractionDigits: 0,
-    maximumFractionDigits: 0 
+    maximumFractionDigits: 0
   }).format(product.originalPrice) : null;
-  
-  const formattedInsurance = product.recommendedInsurance ? new Intl.NumberFormat('cs-CZ', { 
-    style: 'currency', 
+
+  const formattedInsurance = product.recommendedInsurance ? new Intl.NumberFormat('cs-CZ', {
+    style: 'currency',
     currency: 'CZK',
     minimumFractionDigits: 0,
-    maximumFractionDigits: 0 
+    maximumFractionDigits: 0
   }).format(product.recommendedInsurance) : null;
 
   const increaseQuantity = () => setQuantity(q => q + 1);
@@ -75,7 +80,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
   return (
     <div className="flex flex-col bg-esejfy-dark-secondary p-6 rounded-lg border border-gray-700">
       <h1 className="text-3xl font-bold mb-2 text-white">{product.name}</h1>
-      
+
       <div className="flex flex-wrap gap-2 mb-4">
         {product.safeClass && (
           <TooltipProvider>
@@ -91,7 +96,22 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
             </Tooltip>
           </TooltipProvider>
         )}
-        
+
+        {product.certificationStandard && (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Badge className="bg-green-700 hover:bg-green-800 text-white cursor-help">
+                  <Award size={16} className="mr-1" /> {product.certificationStandard}
+                </Badge>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Certifikováno podle evropské normy pro bezpečnostní úschovné objekty</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        )}
+
         {product.fireResistance && (
           <TooltipProvider>
             <Tooltip>
@@ -106,41 +126,59 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
             </Tooltip>
           </TooltipProvider>
         )}
-        
+
         {product.certificationLevel && (
           <Badge variant="outline" className="border-blue-500 text-blue-400">
             <ShieldCheck size={16} className="mr-1" /> Certifikace {product.certificationLevel}
           </Badge>
         )}
-        
+
         {product.waterResistant && (
           <Badge className="bg-blue-500 hover:bg-blue-600 text-white">
             <Droplets size={16} className="mr-1" /> Vodotěsný
           </Badge>
         )}
-        
+
         {product.documentProtection && (
           <Badge variant="outline" className="border-green-500 text-green-400">
             <FileText size={16} className="mr-1" /> {product.documentProtection}
           </Badge>
         )}
       </div>
-      
+
       <p className="text-gray-300 mb-6">{product.description}</p>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         {product.dimensions && (
           <div className="bg-esejfy-dark-primary p-3 rounded-md">
             <h3 className="font-semibold mb-1 text-gray-300 flex items-center">
-              <Info size={16} className="mr-2 text-esejfy-burgundy" />
-              Rozměry:
+              <Ruler size={16} className="mr-2 text-esejfy-burgundy" />
+              Vnější rozměry:
             </h3>
             <p className="text-white">
               {product.dimensions.width} × {product.dimensions.height} × {product.dimensions.depth} cm
             </p>
+            <p className="text-xs text-gray-400 mt-1">
+              ({product.dimensions.width * 10} × {product.dimensions.height * 10} × {product.dimensions.depth * 10} mm)
+            </p>
           </div>
         )}
-        
+
+        {product.internalDimensions && (
+          <div className="bg-esejfy-dark-primary p-3 rounded-md">
+            <h3 className="font-semibold mb-1 text-gray-300 flex items-center">
+              <Layers size={16} className="mr-2 text-esejfy-burgundy" />
+              Vnitřní rozměry:
+            </h3>
+            <p className="text-white">
+              {(product.internalDimensions.width / 10).toFixed(1)} × {(product.internalDimensions.height / 10).toFixed(1)} × {(product.internalDimensions.depth / 10).toFixed(1)} cm
+            </p>
+            <p className="text-xs text-gray-400 mt-1">
+              ({product.internalDimensions.width} × {product.internalDimensions.height} × {product.internalDimensions.depth} mm)
+            </p>
+          </div>
+        )}
+
         {product.weight && (
           <div className="bg-esejfy-dark-primary p-3 rounded-md">
             <h3 className="font-semibold mb-1 text-gray-300 flex items-center">
@@ -150,7 +188,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
             <p className="text-white">{product.weight} kg</p>
           </div>
         )}
-        
+
         {product.lockType && (
           <div className="bg-esejfy-dark-primary p-3 rounded-md">
             <h3 className="font-semibold mb-1 text-gray-300 flex items-center">
@@ -160,7 +198,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
             <p className="text-white">{product.lockType}</p>
           </div>
         )}
-        
+
         {product.keyCapacity && (
           <div className="bg-esejfy-dark-primary p-3 rounded-md">
             <h3 className="font-semibold mb-1 text-gray-300 flex items-center">
@@ -170,7 +208,36 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
             <p className="text-white">{product.keyCapacity} kusů</p>
           </div>
         )}
-        
+
+        {/* Interior features section */}
+        <div className="bg-esejfy-dark-primary p-3 rounded-md">
+          <h3 className="font-semibold mb-1 text-gray-300 flex items-center">
+            <BookOpen size={16} className="mr-2 text-esejfy-burgundy" />
+            Vnitřní vybavení:
+          </h3>
+          <ul className="text-white space-y-1">
+            {product.hooks !== undefined && (
+              <li className="flex items-center">
+                <Anchor size={12} className="mr-2 text-gray-400" />
+                <span>{product.hooks} háčků</span>
+              </li>
+            )}
+            {product.shelves !== undefined && (
+              <li className="flex items-center">
+                <Layers size={12} className="mr-2 text-gray-400" />
+                <span>{product.shelves} {product.shelves === 1 ? 'police' :
+                  (product.shelves > 1 && product.shelves < 5) ? 'police' : 'polic'}</span>
+              </li>
+            )}
+            {product.interiorFeatures && product.interiorFeatures.map((feature, index) => (
+              <li key={index} className="flex items-center">
+                <Info size={12} className="mr-2 text-gray-400" />
+                <span>{feature}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
         {product.fireProtectionTime && (
           <div className="bg-esejfy-dark-primary p-3 rounded-md">
             <h3 className="font-semibold mb-1 text-gray-300 flex items-center">
@@ -180,7 +247,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
             <p className="text-white">{product.fireProtectionTime} minut</p>
           </div>
         )}
-        
+
         {product.installationType && (
           <div className="bg-esejfy-dark-primary p-3 rounded-md">
             <h3 className="font-semibold mb-1 text-gray-300 flex items-center">
@@ -192,7 +259,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
             </p>
           </div>
         )}
-        
+
         {formattedInsurance && (
           <div className="bg-esejfy-dark-primary p-3 rounded-md">
             <h3 className="font-semibold mb-1 text-gray-300 flex items-center">
@@ -203,7 +270,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
           </div>
         )}
       </div>
-      
+
       <div className="mt-auto">
         <div className="flex items-baseline mb-2">
           <span className="text-2xl font-bold text-esejfy-burgundy">{formattedPrice}</span>
@@ -212,14 +279,14 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
           )}
         </div>
         <p className="text-sm text-gray-400 mb-4">Včetně DPH</p>
-        
+
         <div className="flex items-center mb-6">
           <div className={`w-3 h-3 rounded-full mr-2 ${product.inStock ? 'bg-green-500' : 'bg-red-500'}`}></div>
           <span className={product.inStock ? 'text-green-400' : 'text-red-400'}>
             {product.inStock ? 'Skladem' : 'Momentálně nedostupné'}
           </span>
         </div>
-        
+
         {product.inStock && (
           <div className="flex items-center gap-4">
             <div className="flex items-center border border-gray-700 rounded-md bg-esejfy-dark-primary">
@@ -242,7 +309,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
                 <PlusCircle size={18} />
               </Button>
             </div>
-            <Button 
+            <Button
               className="flex-1 bg-esejfy-burgundy hover:bg-esejfy-burgundy/90"
               onClick={handleAddToCart}
             >
@@ -250,7 +317,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
             </Button>
           </div>
         )}
-        
+
         <div className="mt-6 border-t border-gray-700 pt-4">
           <div className="flex items-center gap-2 mb-2">
             <Truck size={18} className="text-esejfy-burgundy" />

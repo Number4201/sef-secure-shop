@@ -17,9 +17,17 @@ export interface Product {
     height: number;
     depth: number;
   };
+  // Vnitřní rozměry v milimetrech
+  internalDimensions?: {
+    width: number;
+    height: number;
+    depth: number;
+  };
   weight?: number;
   // Bezpečnostní specifikace
   certificationLevel?: string;  // Bezpečnostní třída
+  certificationStandard?: string; // Standard certifikace (např. ČSN EN 1143-1)
+  securityClassification?: string; // Klasifikace bezpečnosti
   documentProtection?: string;  // Stupeň utajení dokumentů
   lockType?: string;           // Typ zámku - klíčový, elektronický
   keyCapacity?: number;        // Kapacita na klíče
@@ -31,9 +39,13 @@ export interface Product {
   subcategory?: string; // Podkategorie produktu
   manufacturer?: string; // Výrobce
   series?: string;      // Produktová řada
+  // Vnitřní vybavení
+  hooks?: number;       // Počet háčků
+  shelves?: number;     // Počet polic
+  interiorFeatures?: string[]; // Další vnitřní vybavení
 }
 
-export type ProductCategory = 
+export type ProductCategory =
   | 'nabytkove-trezory'
   | 'trezory-do-zdi'
   | 'trezory-do-podlahy'
