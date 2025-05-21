@@ -62,24 +62,7 @@ const TestimonialCard: React.FC<TestimonialProps> = ({ quote, author, position, 
 };
 
 const TestimonialSection: React.FC = () => {
-  return (
-    <section className="py-16 bg-white">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Co o nás říkají naši zákazníci</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Přečtěte si recenze od spokojených zákazníků, kteří si vybrali naše trezory pro zabezpečení svých cenností
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {testimonials.map((testimonial, index) => (
-            <TestimonialCard key={index} {...testimonial} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
+  return null;
 };
 
 export default TestimonialSection;

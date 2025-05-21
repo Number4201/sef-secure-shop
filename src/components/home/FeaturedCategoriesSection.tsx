@@ -38,16 +38,18 @@ const FeaturedCategoriesSection: React.FC = () => {
       </div>
 
       <div className="bg-white">
-        {featuredCategories.map((category, index) => (
-          <React.Fragment key={category.slug}>
-            <FeaturedCategorySection
-              categorySlug={category.slug}
-              title={category.title}
-              description={category.description}
-            />
-            <CategoryInfoBlock categorySlug={category.slug} />
-          </React.Fragment>
-        ))}
+        {featuredCategories.flatMap((category, index) => ([
+          <FeaturedCategorySection
+            key={`${category.slug}-section`}
+            categorySlug={category.slug}
+            title={category.title}
+            description={category.description}
+          />,
+          <CategoryInfoBlock
+            key={`${category.slug}-info`}
+            categorySlug={category.slug}
+          />
+        ]))}
       </div>
     </div>
   );

@@ -2,15 +2,6 @@
 // This is a temporary mock implementation that will be replaced with your actual backend
 // The Supabase client is only included to prevent build errors until you connect your actual backend
 
-import { createClient } from '@supabase/supabase-js';
-
-// Temporary placeholder values to make the build work
-const supabaseUrl = 'https://your-supabase-url.supabase.co';
-const supabaseAnonKey = 'your-supabase-anon-key';
-
-// Create a temporary client to avoid build errors
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
-
 // Mock user type to maintain TypeScript compatibility
 export type User = {
   id: string;
@@ -88,4 +79,3 @@ export const getCurrentUser = async () => {
   
   return { user: null, error: null };
 };
-
