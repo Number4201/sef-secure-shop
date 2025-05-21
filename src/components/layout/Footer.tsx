@@ -16,7 +16,7 @@ const Footer: React.FC = () => {
                 alt="eSEJFY.net" 
                 className="h-10 mb-2" 
               />
-              <p className="text-sm opacity-75">Specialista na trezory a bezpečnostní řešení</p>
+              <p className="text-sm text-gray-300">Specialista na trezory a bezpečnostní řešení</p>
             </div>
             <div className="space-y-2">
               <p className="flex items-center gap-2 text-sm">
@@ -85,7 +85,7 @@ const Footer: React.FC = () => {
         {/* Payment methods & copyright */}
         <div className="mt-12 pt-4 border-t border-white/20">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="text-sm opacity-75">
+            <div className="text-sm text-gray-300">
               © 2025 eSEJFY.net – Všechna práva vyhrazena
             </div>
             <div className="flex items-center gap-2">

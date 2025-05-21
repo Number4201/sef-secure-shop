@@ -42,7 +42,7 @@ const FeatureCard: React.FC<FeatureProps> = ({ icon, title, description }) => {
           </div>
           <div className="text-left">
             <h3 className="text-lg font-medium mb-1">{title}</h3>
-            <p className="text-gray-600 text-sm">{description}</p>
+            <p className="text-gray-800 text-sm">{description}</p>
           </div>
         </div>
       </CardContent>
@@ -56,7 +56,7 @@ const FeaturesSection: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-8">
           <h2 className="text-2xl font-semibold">Proč si vybrat eSEJFY.net</h2>
-          <p className="text-gray-600 mt-2 text-sm max-w-2xl mx-auto">
+          <p className="text-gray-800 mt-2 text-sm max-w-2xl mx-auto">
             Nabízíme kompletní služby od výběru vhodného trezoru přes dopravu až po instalaci a servis
           </p>
         </div>
