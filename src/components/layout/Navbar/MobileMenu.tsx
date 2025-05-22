@@ -82,20 +82,20 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onLinkClick }) => {
             </li>
             <li>
               <Link
-                to="/kontakt"
-                className="block p-2 hover:bg-gray-100 rounded-md transition-colors"
-                onClick={onLinkClick}
-              >
-                Kontakt
-              </Link>
-            </li>
-            <li>
-              <Link
                 to="/blog"
                 className="block p-2 hover:bg-gray-100 rounded-md transition-colors"
                 onClick={onLinkClick}
               >
                 Blog
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/kontakt"
+                className="block p-2 hover:bg-gray-100 rounded-md transition-colors"
+                onClick={onLinkClick}
+              >
+                Kontakt
               </Link>
             </li>
           </ul>
@@ -107,7 +107,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onLinkClick }) => {
               <a href="mailto:info@esejfy.net" className="flex items-center p-2 hover:bg-gray-100 rounded-md text-esejfy-burgundy">
                 <span>info@esejfy.net</span>
               </a>
-              <a href="tel:+420123456789" className="flex items-center p-2 hover:bg-gray-100 rounded-md text-esejfy-burgundy">
+              <a href="tel:+420123456789" className="flex items-center p-2 hover:bg-gray-100 rounded-md text-esejfy-burgundy whitespace-nowrap">
                 <span>+420 123 456 789</span>
               </a>
             </div>

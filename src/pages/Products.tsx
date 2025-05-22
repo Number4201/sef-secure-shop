@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@/components/ui/breadcrumb';
 import { Card, CardContent } from '@/components/ui/card';
 import { ShieldCheck } from 'lucide-react';
-import { products, getProductsByCategory, getProductsByCategorySync } from '@/data/products';
 import { Product } from '@/types/product';
 import { categoryNames, getCategoryDescription } from '@/utils/categoryMapping';
 import SafeClassFilter from '@/components/products/SafeClassFilter';
@@ -15,25 +14,35 @@ import CategoryFilter from '@/components/products/CategoryFilter';
 import AvailabilityFilter from '@/components/products/AvailabilityFilter';
 import SortingOptions from '@/components/products/SortingOptions';
 import { Separator } from '@/components/ui/separator';
+import useProducts from '@/hooks/useProducts';
 
 const Products = () => {
-  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const categoryParam = searchParams.get('category');
 
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [sortOption, setSortOption] = useState('default');
   const [safeClassFilter, setSafeClassFilter] = useState<string[]>([]);
   const [inStockOnly, setInStockOnly] = useState(false);
   const [priceRange, setPriceRange] = useState<[number, number] | null>(null);
-  const [loading, setLoading] = useState(true);
 
-  // Get all unique safe classes for filter options
+  // Použijeme náš hook pro práci s produkty
+  const {
+    products: allProducts,
+    loading,
+    error,
+    fetchProducts,
+    fetchProductsByCategory
+  } = useProducts();
+
+  // Stav pro filtrované produkty
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+
+  // Získáme všechny unikátní bezpečnostní třídy pro možnosti filtru
   const availableSafeClasses = Array.from(
-    new Set(products.map(p => p.safeClass).filter(Boolean))
+    new Set(allProducts.map((p: Product) => p.safeClass).filter(Boolean))
   ).sort() as string[];
 
-  // Handle safe class filter toggle
+  // Přepínání filtru bezpečnostní třídy
   const toggleSafeClassFilter = (value: string) => {
     setSafeClassFilter(prev =>
       prev.includes(value)
@@ -42,7 +51,7 @@ const Products = () => {
     );
   };
 
-  // Handle category change
+  // Změna kategorie
   const handleCategoryChange = (category: string | null) => {
     if (category) {
       setSearchParams({ category });
@@ -51,108 +60,70 @@ const Products = () => {
     }
   };
 
-  // Update filtered products when category or filters change
+  // Načtení produktů při prvním načtení a při změně kategorie
   useEffect(() => {
-    const fetchProducts = async () => {
-      setLoading(true);
-
+    const loadProducts = async () => {
       try {
-        // First, use the sync version for immediate display
-        let syncResult = categoryParam ? getProductsByCategorySync(categoryParam) : products;
-
-        // Apply filters to the sync result
-        if (safeClassFilter.length > 0) {
-          syncResult = syncResult.filter(product =>
-            product.safeClass && safeClassFilter.includes(product.safeClass)
-          );
+        if (categoryParam) {
+          const categoryProducts = await fetchProductsByCategory(categoryParam);
+          setFilteredProducts(categoryProducts);
+        } else {
+          await fetchProducts();
+          setFilteredProducts(allProducts);
         }
-
-        if (inStockOnly) {
-          syncResult = syncResult.filter(product => product.inStock);
-        }
-
-        if (priceRange) {
-          const [min, max] = priceRange;
-          syncResult = syncResult.filter(product =>
-            product.price >= min && product.price <= max
-          );
-        }
-
-        // Apply sorting to the sync result
-        switch(sortOption) {
-          case 'price-asc':
-            syncResult = [...syncResult].sort((a, b) => a.price - b.price);
-            break;
-          case 'price-desc':
-            syncResult = [...syncResult].sort((a, b) => b.price - a.price);
-            break;
-          case 'name-asc':
-            syncResult = [...syncResult].sort((a, b) => a.name.localeCompare(b.name));
-            break;
-          case 'name-desc':
-            syncResult = [...syncResult].sort((a, b) => b.name.localeCompare(a.name));
-            break;
-          default:
-            // Default sorting - no change
-            break;
-        }
-
-        // Set the filtered products with the sync result first
-        setFilteredProducts(syncResult);
-
-        // Then fetch from the database
-        let dbResult = await getProductsByCategory(categoryParam);
-
-        // Apply the same filters to the database result
-        if (safeClassFilter.length > 0) {
-          dbResult = dbResult.filter(product =>
-            product.safeClass && safeClassFilter.includes(product.safeClass)
-          );
-        }
-
-        if (inStockOnly) {
-          dbResult = dbResult.filter(product => product.inStock);
-        }
-
-        if (priceRange) {
-          const [min, max] = priceRange;
-          dbResult = dbResult.filter(product =>
-            product.price >= min && product.price <= max
-          );
-        }
-
-        // Apply sorting to the database result
-        switch(sortOption) {
-          case 'price-asc':
-            dbResult = [...dbResult].sort((a, b) => a.price - b.price);
-            break;
-          case 'price-desc':
-            dbResult = [...dbResult].sort((a, b) => b.price - a.price);
-            break;
-          case 'name-asc':
-            dbResult = [...dbResult].sort((a, b) => a.name.localeCompare(b.name));
-            break;
-          case 'name-desc':
-            dbResult = [...dbResult].sort((a, b) => b.name.localeCompare(a.name));
-            break;
-          default:
-            // Default sorting - no change
-            break;
-        }
-
-        // Update the filtered products with the database result
-        setFilteredProducts(dbResult);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      } finally {
-        setLoading(false);
+      } catch (err) {
+        console.error('Error loading products:', err);
       }
     };
 
-    fetchProducts();
-  }, [categoryParam, sortOption, safeClassFilter, inStockOnly, priceRange]);
+    loadProducts();
+  }, [categoryParam, fetchProducts, fetchProductsByCategory, allProducts]);
 
-  // Reset all filters
+  // Aplikace filtrů a řazení na produkty
+  useEffect(() => {
+    let result = [...(categoryParam ? filteredProducts : allProducts)];
+
+    // Aplikace filtrů
+    if (safeClassFilter.length > 0) {
+      result = result.filter((product: Product) =>
+        product.safeClass && safeClassFilter.includes(product.safeClass)
+      );
+    }
+
+    if (inStockOnly) {
+      result = result.filter((product: Product) => product.inStock);
+    }
+
+    if (priceRange) {
+      const [min, max] = priceRange;
+      result = result.filter((product: Product) =>
+        product.price >= min && product.price <= max
+      );
+    }
+
+    // Aplikace řazení
+    switch(sortOption) {
+      case 'price-asc':
+        result = [...result].sort((a, b) => a.price - b.price);
+        break;
+      case 'price-desc':
+        result = [...result].sort((a, b) => b.price - a.price);
+        break;
+      case 'name-asc':
+        result = [...result].sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      case 'name-desc':
+        result = [...result].sort((a, b) => b.name.localeCompare(a.name));
+        break;
+      default:
+        // Výchozí řazení - žádná změna
+        break;
+    }
+
+    setFilteredProducts(result);
+  }, [categoryParam, sortOption, safeClassFilter, inStockOnly, priceRange, allProducts]);
+
+  // Reset všech filtrů
   const resetFilters = () => {
     setSafeClassFilter([]);
     setSortOption('default');

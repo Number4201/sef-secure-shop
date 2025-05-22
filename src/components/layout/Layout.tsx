@@ -13,17 +13,17 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const isMobile = useIsMobile();
-  
+
   return (
-    <div className="flex flex-col min-h-screen w-full relative bg-esejfy-dark-primary text-white overflow-hidden">
+    <div className="flex flex-col min-h-screen w-full relative bg-white text-gray-900 overflow-hidden">
       <Navbar />
       <main className="flex-grow relative w-full">
         {children}
       </main>
-      <Suspense fallback={<div className="h-16 bg-esejfy-dark-secondary"></div>}>
+      <Suspense fallback={<div className="h-16 bg-gray-100"></div>}>
         <Footer />
       </Suspense>
-      
+
       {/* Contact button - displayed on all pages */}
       <ContactButton />
     </div>

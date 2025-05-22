@@ -4,65 +4,9 @@ import Layout from '@/components/layout/Layout';
 import HeroSection from '@/components/home/HeroSection';
 import CategoryIconsSection from '@/components/home/CategoryIconsSection';
 import FeaturedCategoriesSection from '@/components/home/FeaturedCategoriesSection';
-import ProductGrid from '@/components/products/ProductGrid';
+import CertifiedSafesInfo from '@/components/home/CertifiedSafesInfo';
 import FeaturesSection from '@/components/home/FeaturesSection';
-import TestimonialSection from '@/components/home/TestimonialSection';
-import CallToAction from '@/components/home/CallToAction';
-import { getFeaturedProducts } from '@/data/products';
 import { useIsMobile } from '@/hooks/use-mobile';
-
-const FeaturedProductsSection = React.memo(() => {
-  const [featuredProducts, setFeaturedProducts] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
-  const isMobile = useIsMobile();
-
-  React.useEffect(() => {
-    const loadProducts = async () => {
-      try {
-        const products = await getFeaturedProducts();
-        setFeaturedProducts(products);
-      } catch (error) {
-        console.error("Error loading featured products:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadProducts();
-  }, []);
-
-  return (
-    <section className={`${isMobile ? 'py-12' : 'py-20'} bg-white`}>
-      <div className="container mx-auto px-4">
-        <div className={`text-center ${isMobile ? 'mb-8' : 'mb-12'}`}>
-          <h2 className={`${isMobile ? 'text-2xl' : 'text-4xl'} font-bold mb-4`}>Nejprodávanější produkty</h2>
-          <p className="text-gray-600 text-lg max-w-3xl mx-auto">
-            Objevte naše nejoblíbenější trezory
-          </p>
-        </div>
-
-        {isLoading ? (
-          <div className="flex justify-center items-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-esejfy-burgundy"></div>
-          </div>
-        ) : (
-          <ProductGrid products={featuredProducts} />
-        )}
-
-        <div className="text-center mt-8">
-          <a
-            href="/products"
-            className="inline-flex items-center text-lg text-esejfy-burgundy hover:text-esejfy-burgundy/80 font-medium animated-underline"
-          >
-            Zobrazit všechny produkty
-          </a>
-        </div>
-      </div>
-    </section>
-  );
-});
-
-FeaturedProductsSection.displayName = 'FeaturedProductsSection';
 
 const Index = () => {
   const isMobile = useIsMobile();
@@ -73,10 +17,8 @@ const Index = () => {
         <HeroSection />
         <CategoryIconsSection />
         <FeaturedCategoriesSection />
-        <FeaturedProductsSection />
+        <CertifiedSafesInfo />
         <FeaturesSection />
-        {!isMobile && <TestimonialSection />}
-        <CallToAction />
       </div>
     </Layout>
   );

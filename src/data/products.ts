@@ -458,3 +458,41 @@ export const getRelatedProductsSync = (currentProductId: string, category: strin
     .filter(product => product.category === category && product.id !== currentProductId)
     .slice(0, count);
 };
+
+// Function to get products on sale
+export const getProductsOnSale = async (count = 4) => {
+  try {
+    // In a real application, this would be a database query
+    // For now, we'll filter products that have an originalPrice
+    const onSaleProducts = products.filter(product =>
+      product.originalPrice && product.originalPrice > product.price
+    );
+
+    // Sort by discount percentage (highest first)
+    const sortedProducts = onSaleProducts.sort((a, b) => {
+      const discountA = a.originalPrice ? (a.originalPrice - a.price) / a.originalPrice : 0;
+      const discountB = b.originalPrice ? (b.originalPrice - b.price) / b.originalPrice : 0;
+      return discountB - discountA;
+    });
+
+    return sortedProducts.slice(0, count);
+  } catch (error) {
+    console.error('Error fetching products on sale:', error);
+    return [];
+  }
+};
+
+// Synchronous version for backward compatibility
+export const getProductsOnSaleSync = (count = 4) => {
+  const onSaleProducts = products.filter(product =>
+    product.originalPrice && product.originalPrice > product.price
+  );
+
+  const sortedProducts = onSaleProducts.sort((a, b) => {
+    const discountA = a.originalPrice ? (a.originalPrice - a.price) / a.originalPrice : 0;
+    const discountB = b.originalPrice ? (b.originalPrice - b.price) / b.originalPrice : 0;
+    return discountB - discountA;
+  });
+
+  return sortedProducts.slice(0, count);
+};

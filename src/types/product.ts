@@ -1,4 +1,14 @@
 
+// Typ pro variantu produktu
+export interface ProductVariant {
+  id: string;
+  title?: string;
+  prices?: { amount: number }[];
+  inventory_quantity?: number;
+  weight?: number;
+  original_price?: number;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -12,6 +22,8 @@ export interface Product {
   inStock: boolean;
   description: string;
   features: string[];
+  // Varianty produktu pro Medusa.js
+  variants?: ProductVariant[];
   dimensions?: {
     width: number;
     height: number;

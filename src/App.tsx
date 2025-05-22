@@ -1,9 +1,11 @@
 
 import { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { CartProvider } from './hooks/use-cart';
 import { Toaster } from './components/ui/toaster';
-import { AuthProvider } from './contexts/AuthContext';
+import { AppProvider } from './contexts/AppContext';
+import { CartProvider } from './contexts/CartContext';
+import { CustomerProvider } from './contexts/CustomerContext';
+import LoadingScreen from './components/LoadingScreen';
 import CookieConsent from './components/cookie/CookieConsent';
 
 // Lazy load pages for better initial load performance
@@ -28,28 +30,30 @@ const PageLoader = () => (
 function App() {
   return (
     <Router>
-      <AuthProvider>
-        <CartProvider>
-          <div className="overflow-hidden w-full max-w-[100vw]">
-            <CookieConsent />
-            <Suspense fallback={<PageLoader />}>
-              <Routes>
-                <Route path="/" element={<IndexPage />} />
-                <Route path="/products" element={<ProductsPage />} />
-                <Route path="/product/:slug" element={<ProductDetailPage />} />
-                <Route path="/cart" element={<CartPage />} />
-                <Route path="/blog" element={<BlogPage />} />
-                <Route path="/blog/:slug" element={<BlogPostPage />} />
-                <Route path="/o-nas" element={<AboutUsPage />} />
-                <Route path="/kontakt" element={<ContactPage />} />
-                <Route path="/auth/callback" element={<AuthCallbackPage />} />
-                <Route path="*" element={<NotFoundPage />} />
-              </Routes>
-            </Suspense>
-            <Toaster />
-          </div>
-        </CartProvider>
-      </AuthProvider>
+      <AppProvider>
+        <CustomerProvider>
+          <CartProvider>
+            <div className="overflow-hidden w-full max-w-[100vw]">
+              <CookieConsent />
+              <Suspense fallback={<PageLoader />}>
+                <Routes>
+                  <Route path="/" element={<IndexPage />} />
+                  <Route path="/products" element={<ProductsPage />} />
+                  <Route path="/product/:slug" element={<ProductDetailPage />} />
+                  <Route path="/cart" element={<CartPage />} />
+                  <Route path="/blog" element={<BlogPage />} />
+                  <Route path="/blog/:slug" element={<BlogPostPage />} />
+                  <Route path="/o-nas" element={<AboutUsPage />} />
+                  <Route path="/kontakt" element={<ContactPage />} />
+                  <Route path="/auth/callback" element={<AuthCallbackPage />} />
+                  <Route path="*" element={<NotFoundPage />} />
+                </Routes>
+              </Suspense>
+              <Toaster />
+            </div>
+          </CartProvider>
+        </CustomerProvider>
+      </AppProvider>
     </Router>
   );
 }

@@ -30,29 +30,30 @@ const HeroSection: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="space-y-6">
             <h1 className={`${isMobile ? 'text-3xl' : 'text-4xl md:text-5xl'} font-bold leading-tight`}>
-              Bezpečnost bez kompromisů pro váš domov i firmu
+              Kvalitní trezory pro každou potřebu
             </h1>
-            <p className="text-lg opacity-90 text-white">
-              Profesionální trezory a sejfy s certifikovanou ochranou pro vaše cennosti, dokumenty a zbraně.
+
+            <p className="text-white/90 text-lg mt-4 max-w-xl">
+              Vyberte si z našeho širokého sortimentu trezorů a sejfů s certifikací pro maximální bezpečnost vašich cenností.
             </p>
 
-            <form onSubmit={handleSearch} className="relative max-w-xl">
-              <Input
-                type="search"
-                placeholder="Vyhledat trezor..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full h-12 pl-12 pr-4 rounded-lg bg-white/10 border-white/20 text-white placeholder:text-white/60 focus:bg-white/15 focus:border-white/30"
-              />
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
+            <div className="flex gap-4 mt-8">
               <Button
-                type="submit"
-                className="absolute right-2 top-1/2 -translate-y-1/2 bg-white text-esejfy-burgundy hover:bg-gray-100"
-                size="sm"
+                size="lg"
+                className="bg-white text-esejfy-burgundy hover:bg-white/90 shadow-lg"
+                onClick={() => navigate('/products')}
               >
-                Hledat
+                Prohlédnout nabídku
               </Button>
-            </form>
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-white text-white hover:bg-white/10"
+                onClick={() => navigate('/kontakt')}
+              >
+                Kontaktovat nás
+              </Button>
+            </div>
           </div>
 
           <div className="relative">

@@ -50,15 +50,32 @@ ListItem.displayName = "ListItem"
 
 const NavLinks: React.FC = () => {
   return (
-    <nav className="hidden lg:flex items-center space-x-6">
-      <Link to="/" className="text-gray-900 hover:text-esejfy-burgundy transition-colors font-medium">
+    <nav className="hidden lg:flex items-center space-x-1">
+      <Link to="/" className="text-gray-800 hover:text-esejfy-burgundy hover:bg-gray-50 transition-all font-medium px-4 py-2 rounded-md">
         Domů
       </Link>
-      
+
+      <Link to="/products" className="text-gray-800 hover:text-esejfy-burgundy hover:bg-gray-50 transition-all font-medium px-4 py-2 rounded-md">
+        Produkty
+      </Link>
+
+      <Link to="/o-nas" className="text-gray-800 hover:text-esejfy-burgundy hover:bg-gray-50 transition-all font-medium px-4 py-2 rounded-md">
+        O nás
+      </Link>
+
+      <Link to="/blog" className="text-gray-800 hover:text-esejfy-burgundy hover:bg-gray-50 transition-all font-medium px-4 py-2 rounded-md">
+        Blog
+      </Link>
+
+      <Link to="/kontakt" className="text-gray-800 hover:text-esejfy-burgundy hover:bg-gray-50 transition-all font-medium px-4 py-2 rounded-md">
+        Kontakt
+      </Link>
+
+      {/* Rozbalovací menu pro všechny kategorie */}
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuTrigger className="bg-transparent hover:bg-transparent hover:text-esejfy-burgundy text-gray-900 font-medium">Produkty</NavigationMenuTrigger>
+            <NavigationMenuTrigger className="bg-transparent hover:bg-transparent hover:text-esejfy-burgundy text-gray-900 font-medium">Všechny kategorie</NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                 {categories.map((category) => (
@@ -71,13 +88,6 @@ const NavLinks: React.FC = () => {
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
-      
-      <Link to="/o-nas" className="text-gray-900 hover:text-esejfy-burgundy transition-colors font-medium">
-        O nás
-      </Link>
-      <Link to="/kontakt" className="text-gray-900 hover:text-esejfy-burgundy transition-colors font-medium">
-        Kontakt
-      </Link>
     </nav>
   );
 };

@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
-import { getProductBySlug, getRelatedProducts, getProductBySlugSync, getRelatedProductsSync } from '@/data/products';
 import { categoryNames } from '@/utils/categoryMapping';
 import {
   HoverCard,
@@ -14,6 +13,8 @@ import ProductInfo from './ProductInfo';
 import ProductTabs from './ProductTabs';
 import ProductBreadcrumb from './ProductBreadcrumb';
 import { Product } from '@/types/product';
+import useProducts from '@/hooks/useProducts';
+import { useCartContext } from '@/contexts/CartContext';
 
 const ProductDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -21,35 +22,52 @@ const ProductDetail: React.FC = () => {
   const { toast } = useToast();
   const [product, setProduct] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
+
+  // Použijeme náš hook pro práci s produkty
+  const {
+    loading,
+    error: productsError,
+    fetchProductByHandle,
+    fetchProductsByCategory
+  } = useProducts();
+
+  // Použijeme náš hook pro práci s košíkem
+  const { addItem } = useCartContext();
+
+  // Stav pro chyby
   const [error, setError] = useState(false);
 
-  // Fetch product data based on slug
+  // Načtení produktu podle slugu
   useEffect(() => {
     const fetchProductData = async () => {
       if (!slug) {
+        console.error('No slug provided');
         setError(true);
-        setLoading(false);
         return;
       }
 
-      try {
-        // First, try to get a synchronous version for immediate display
-        const syncProduct = getProductBySlugSync(slug);
-        if (syncProduct) {
-          setProduct(syncProduct);
-        }
+      console.log(`ProductDetail: Fetching data for product with slug: ${slug}`);
 
-        // Then fetch the product with hooks and other database data
-        const fetchedProduct = await getProductBySlug(slug);
+      try {
+        // Načtení produktu z Medusa backendu
+        const fetchedProduct = await fetchProductByHandle(slug);
 
         if (fetchedProduct) {
+          console.log(`ProductDetail: Successfully fetched product data from API:`, fetchedProduct);
           setProduct(fetchedProduct);
 
-          // Fetch related products
-          const fetchedRelatedProducts = await getRelatedProducts(fetchedProduct.id, fetchedProduct.category);
-          setRelatedProducts(fetchedRelatedProducts);
+          // Načtení souvisejících produktů
+          if (fetchedProduct.category) {
+            console.log(`ProductDetail: Fetching related products for category: ${fetchedProduct.category}`);
+            const categoryProducts = await fetchProductsByCategory(fetchedProduct.category);
+
+            // Filtrujeme produkty, abychom odstranili aktuální produkt
+            const filteredProducts = categoryProducts.filter(p => p.id !== fetchedProduct.id).slice(0, 4);
+            console.log(`ProductDetail: Found ${filteredProducts.length} related products`);
+            setRelatedProducts(filteredProducts);
+          }
         } else {
+          console.error(`ProductDetail: Product with slug ${slug} not found in API`);
           setError(true);
           toast({
             title: "Produkt nenalezen",
@@ -59,22 +77,39 @@ const ProductDetail: React.FC = () => {
           setTimeout(() => navigate('/'), 2000);
         }
       } catch (err) {
-        console.error('Error fetching product:', err);
+        console.error('ProductDetail: Error fetching product:', err);
         setError(true);
         toast({
           title: "Chyba při načítání produktu",
           description: "Nastala chyba při načítání produktu. Zkuste to prosím znovu.",
           variant: "destructive"
         });
-      } finally {
-        setLoading(false);
       }
     };
 
     fetchProductData();
-  }, [slug, navigate, toast]);
+  }, [slug, navigate, toast, fetchProductByHandle, fetchProductsByCategory]);
 
-  // Show loading state
+  // Funkce pro přidání produktu do košíku
+  const handleAddToCart = async (variantId: string, quantity: number = 1) => {
+    try {
+      await addItem(variantId, quantity);
+      toast({
+        title: "Produkt přidán do košíku",
+        description: `${product?.name} byl přidán do košíku.`,
+        variant: "default"
+      });
+    } catch (err) {
+      console.error('Error adding product to cart:', err);
+      toast({
+        title: "Chyba při přidávání do košíku",
+        description: "Nastala chyba při přidávání produktu do košíku. Zkuste to prosím znovu.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  // Zobrazení načítání
   if (loading && !product) {
     return (
       <div className="container mx-auto px-4 py-16 text-center">
@@ -85,8 +120,8 @@ const ProductDetail: React.FC = () => {
     );
   }
 
-  // If product not found, show error
-  if (error || !product) {
+  // Pokud produkt nebyl nalezen, zobrazíme chybu
+  if (error || productsError || !product) {
     return (
       <div className="container mx-auto px-4 py-16 text-center">
         <h1 className="text-2xl font-bold mb-4 text-white">Produkt nenalezen</h1>
@@ -94,11 +129,6 @@ const ProductDetail: React.FC = () => {
       </div>
     );
   }
-
-  // If we don't have related products from the database yet, use the sync version
-  const displayRelatedProducts = relatedProducts.length > 0
-    ? relatedProducts
-    : getRelatedProductsSync(product.id, product.category);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -127,16 +157,19 @@ const ProductDetail: React.FC = () => {
         </div>
 
         {/* Product info */}
-        <ProductInfo product={product} />
+        <ProductInfo
+          product={product}
+          onAddToCart={handleAddToCart}
+        />
       </div>
 
       {/* Tabs section */}
       <ProductTabs product={product} />
 
       {/* Related products */}
-      {displayRelatedProducts.length > 0 && (
+      {relatedProducts.length > 0 && (
         <div className="mt-16">
-          <ProductGrid products={displayRelatedProducts} title="Související produkty" />
+          <ProductGrid products={relatedProducts} title="Související produkty" />
         </div>
       )}
     </div>

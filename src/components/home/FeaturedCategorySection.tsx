@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import { Product } from '@/types/product';
 import { getProductsByCategorySync, getProductBySlugSync } from '@/data/products';
 import { Button } from '@/components/ui/button';
-import { ShoppingCart, Star, ChevronRight, ChevronLeft } from 'lucide-react';
+import { ShoppingCart, Star, ChevronRight, ChevronLeft, Shield, Package, Truck, Clock } from 'lucide-react';
 import { useCart } from '@/hooks/use-cart';
 import { formatPrice } from '@/lib/utils';
 import { getTrendingProductIdForCategory } from '@/data/trendingProducts';
+import { H3, P } from '@/components/ui/typography';
 
 interface FeaturedCategorySectionProps {
   categorySlug: string;
@@ -19,21 +20,20 @@ const FeaturedCategorySection: React.FC<FeaturedCategorySectionProps> = ({
   title,
   description
 }) => {
-  // Získat produkty z dané kategorie a omezit na 8
+  // Získat produkty z dané kategorie a omezit na 6-8 produktů
   const products = getProductsByCategorySync(categorySlug).slice(0, 8);
   const { addItem } = useCart();
 
   // Získat trendující produkt pro kategorii
   const trendingProductId = getTrendingProductIdForCategory(categorySlug);
-  const trendingProduct = trendingProductId
-    ? products.find(p => p.id === trendingProductId) || products[0]
-    : products[0];
+  const initialTrendingIndex = products.findIndex(p => p.id === trendingProductId);
 
   // Stav pro zobrazení trendujícího produktu
-  const [currentTrendingIndex, setCurrentTrendingIndex] = useState(0);
-  const [showTrendingProduct, setShowTrendingProduct] = useState(true);
+  const [currentTrendingIndex, setCurrentTrendingIndex] = useState(
+    initialTrendingIndex >= 0 ? initialTrendingIndex : 0
+  );
 
-  // Funkce pro změnu trendujícího produktu
+  // Funkce pro změnu trendujícího produktu - jednoduchý mechanismus bez slideru
   const changeTrendingProduct = (direction: 'next' | 'prev') => {
     if (direction === 'next') {
       setCurrentTrendingIndex((prev) => (prev + 1) % products.length);
@@ -49,11 +49,16 @@ const FeaturedCategorySection: React.FC<FeaturedCategorySectionProps> = ({
   };
 
   return (
-    <section className="py-4 bg-white last:border-0">
+    <section className="py-12 bg-white border-b border-gray-100 last:border-0">
       <div className="container mx-auto px-4">
-        <div className="mb-2">
-          <h2 className="text-xl md:text-2xl font-bold mb-0.5">{title}</h2>
-          <p className="text-gray-800 max-w-3xl font-medium text-sm md:text-base">{description}</p>
+        <div className="flex items-center mb-8 fade-in">
+          <div className="mr-4 bg-esejfy-burgundy/10 p-3 rounded-full">
+            <Shield className="w-8 h-8 text-esejfy-burgundy" />
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold mb-2 text-gray-900 font-heading">{title}</h2>
+            <p className="text-gray-700 max-w-3xl text-base font-body">{description}</p>
+          </div>
         </div>
 
         {products.length === 0 ? (
@@ -61,155 +66,127 @@ const FeaturedCategorySection: React.FC<FeaturedCategorySectionProps> = ({
             <p>Žádné produkty v této kategorii nebyly nalezeny.</p>
           </div>
         ) : (
-          <div className="bg-white rounded-lg shadow-sm p-2">
-            {/* Trendující produkt */}
-            <div className="mb-2 border-b border-gray-100 pb-2">
-              <div className="flex items-center justify-between mb-1">
-                <div className="flex items-center">
-                  <Star size={14} className="text-yellow-500 mr-1" />
-                  <h3 className="text-sm font-semibold">Trendující produkt v kategorii</h3>
-                </div>
-                <div className="flex items-center space-x-1">
-                  <button
-                    onClick={() => changeTrendingProduct('prev')}
-                    className="p-1 rounded-full hover:bg-gray-100"
-                  >
-                    <ChevronLeft size={14} />
-                  </button>
-                  <button
-                    onClick={() => changeTrendingProduct('next')}
-                    className="p-1 rounded-full hover:bg-gray-100"
-                  >
-                    <ChevronRight size={14} />
-                  </button>
-                </div>
-              </div>
+          <div className="bg-white rounded-lg shadow-md p-8 border border-gray-100 hover:shadow-lg transition-all duration-300">
+            <div className="mb-8">
+              <H3 className="text-gray-900 mb-2">Nejoblíbenější {title.toLowerCase()}</H3>
+              <P variant="muted" className="max-w-3xl">
+                Vyberte si z nejoblíbenějších trezorů s certifikací a ochraňte to, co je pro vás nejcenější
+              </P>
 
-              <div className="flex gap-2">
-                <div className="w-1/3 sm:w-1/4 md:w-1/5">
-                  <Link to={`/product/${products[currentTrendingIndex].slug}`} className="block">
-                    <div className="relative h-32 sm:h-36 border border-gray-200 rounded-lg overflow-hidden">
-                      <img
-                        src={products[currentTrendingIndex].image}
-                        alt={products[currentTrendingIndex].name}
-                        className="w-full h-full object-cover"
-                      />
-                      {products[currentTrendingIndex].originalPrice && (
-                        <div className="absolute top-1 right-1 bg-esejfy-burgundy text-white text-xs font-bold px-1.5 py-0.5 rounded">
-                          -{calculateDiscount(products[currentTrendingIndex].price, products[currentTrendingIndex].originalPrice)}%
-                        </div>
-                      )}
-                    </div>
-                  </Link>
-                </div>
-
-                <div className="w-2/3 sm:w-3/4 md:w-4/5 flex flex-col justify-between">
-                  <div>
-                    <Link to={`/product/${products[currentTrendingIndex].slug}`} className="hover:text-esejfy-burgundy transition-colors">
-                      <h4 className="font-medium text-sm mb-1 line-clamp-2 text-gray-900">{products[currentTrendingIndex].name}</h4>
-                    </Link>
-                    <p className="text-xs text-gray-600 line-clamp-2 mb-1">{products[currentTrendingIndex].description.substring(0, 100)}...</p>
-
-                    <div className="flex items-baseline mb-1">
-                      <span className="text-base font-bold text-esejfy-burgundy">
-                        {formatPrice(products[currentTrendingIndex].price)}
-                      </span>
-                      {products[currentTrendingIndex].originalPrice && (
-                        <span className="ml-1 text-xs text-gray-500 line-through">
-                          {formatPrice(products[currentTrendingIndex].originalPrice)}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="flex gap-2">
-                    <button
-                      className="bg-esejfy-burgundy hover:bg-esejfy-burgundy/90 text-white py-1 px-2 rounded text-xs flex items-center justify-center"
-                      disabled={!products[currentTrendingIndex].inStock}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        addItem(products[currentTrendingIndex], 1);
-                      }}
-                    >
-                      <ShoppingCart size={12} className="mr-1" />
-                      Do košíku
-                    </button>
-                    <Link
-                      to={`/product/${products[currentTrendingIndex].slug}`}
-                      className="border border-esejfy-burgundy text-esejfy-burgundy hover:bg-esejfy-burgundy hover:text-white transition-colors py-1 px-2 rounded text-xs flex items-center justify-center"
-                    >
-                      Detail produktu
-                    </Link>
-                  </div>
-                </div>
+              <div className="flex flex-wrap gap-2 mt-6">
+                <button className="px-4 py-2 text-sm bg-white border border-gray-200 rounded-md hover:bg-esejfy-lightgray hover:border-esejfy-burgundy/20 text-gray-700 font-medium flex items-center transition-all duration-200">
+                  <span>Velikost trezorů</span>
+                  <ChevronRight size={16} className="ml-1" />
+                </button>
+                <button className="px-4 py-2 text-sm bg-white border border-gray-200 rounded-md hover:bg-esejfy-lightgray hover:border-esejfy-burgundy/20 text-gray-700 font-medium flex items-center transition-all duration-200">
+                  <span>Zámek</span>
+                  <ChevronRight size={16} className="ml-1" />
+                </button>
+                <button className="px-4 py-2 text-sm bg-white border border-gray-200 rounded-md hover:bg-esejfy-lightgray hover:border-esejfy-burgundy/20 text-gray-700 font-medium flex items-center transition-all duration-200">
+                  <span>Bezpečnostní třída</span>
+                  <ChevronRight size={16} className="ml-1" />
+                </button>
+                <button className="px-4 py-2 text-sm bg-white border border-gray-200 rounded-md hover:bg-esejfy-lightgray hover:border-esejfy-burgundy/20 text-gray-700 font-medium flex items-center transition-all duration-200">
+                  <span>Sleva</span>
+                  <ChevronRight size={16} className="ml-1" />
+                </button>
               </div>
             </div>
-
-            {/* Grid produktů */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-1.5">
-              {products.map((product) => (
-                <div key={product.id} className="border border-gray-200 rounded-lg overflow-hidden bg-white hover:shadow-md transition-shadow">
-                  <Link to={`/product/${product.slug}`} className="block">
-                    <div className="relative h-40">
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        className="w-full h-full object-cover"
-                      />
-                      {product.originalPrice && (
-                        <div className="absolute top-1 right-1 bg-esejfy-burgundy text-white text-xs font-bold px-1.5 py-0.5 rounded">
-                          -{calculateDiscount(product.price, product.originalPrice)}%
-                        </div>
-                      )}
-                      {!product.inStock && (
-                        <div className="absolute bottom-0 left-0 w-full bg-black bg-opacity-70 text-white py-0.5 px-1 text-xs text-center">
-                          Nedostupné
-                        </div>
-                      )}
-                    </div>
-                  </Link>
-                  <div className="p-1.5">
-                    <Link to={`/product/${product.slug}`} className="hover:text-esejfy-burgundy transition-colors">
-                      <h4 className="font-medium text-xs mb-1 line-clamp-2 h-8 text-gray-900">{product.name}</h4>
+            {/* Grid produktů - zobrazení produktů v řadě */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {products.slice(0, 8).map((product) => (
+                <div key={product.id} className="product-card group">
+                  <div className="relative">
+                    <Link to={`/product/${product.slug}`} className="block">
+                      <div className="relative pt-[75%] bg-white">
+                        <img
+                          src={product.image}
+                          alt={product.name}
+                          className="absolute top-0 left-0 w-full h-full object-contain p-6 product-image"
+                        />
+                      </div>
                     </Link>
 
-                    <div className="flex items-baseline mb-1">
-                      <span className="text-sm font-bold text-esejfy-burgundy">
+                    {/* Badges */}
+                    {product.safeClass && (
+                      <div className="product-certification">
+                        <Shield size={12} className="text-white" />
+                        Třída {product.safeClass}
+                      </div>
+                    )}
+
+                    {product.originalPrice && (
+                      <div className="product-badge">
+                        -{calculateDiscount(product.price, product.originalPrice)}%
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="p-5">
+                    <Link to={`/product/${product.slug}`} className="block">
+                      <h3 className="product-title mb-1 line-clamp-2 h-14">{product.name}</h3>
+                    </Link>
+
+                    <div className="mb-3">
+                      <p className="text-sm text-gray-600 font-body">
+                        {product.safeClass && `Třída ${product.safeClass}`}
+                        {product.lockType && ` - Zámek: ${product.lockType}`}
+                      </p>
+                    </div>
+
+                    <div className="flex items-baseline mb-4">
+                      <span className="product-price">
                         {formatPrice(product.price)}
                       </span>
                       {product.originalPrice && (
-                        <span className="ml-1 text-xs text-gray-500 line-through">
+                        <span className="ml-2 text-sm text-gray-500 line-through">
                           {formatPrice(product.originalPrice)}
                         </span>
                       )}
                     </div>
 
-                    <button
-                      className="w-full bg-esejfy-burgundy hover:bg-esejfy-burgundy/90 text-white py-1 px-2 rounded text-xs flex items-center justify-center"
-                      disabled={!product.inStock}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        addItem(product, 1);
-                      }}
-                    >
-                      <ShoppingCart size={12} className="mr-1" />
-                      Do košíku
-                    </button>
+                    <div className="flex justify-between items-center">
+                      <button
+                        className="btn-primary w-full"
+                        disabled={!product.inStock}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          addItem(product, 1);
+                        }}
+                      >
+                        <ShoppingCart size={16} className="mr-2" />
+                        Do košíku
+                      </button>
+                    </div>
+
+                    {/* Trust indicators */}
+                    <div className="mt-4 space-y-2 pt-4 border-t border-gray-100">
+                      <div className="flex items-center text-xs text-gray-700">
+                        <Shield size={14} className="mr-2 text-esejfy-burgundy" />
+                        Certifikace {product.safeClass && `Třída ${product.safeClass}`}
+                      </div>
+                      <div className="flex items-center text-xs text-gray-700">
+                        <Clock size={14} className="mr-2 text-esejfy-burgundy" />
+                        Záruka 10 let
+                      </div>
+                      <div className="flex items-center text-xs text-gray-700">
+                        <Truck size={14} className="mr-2 text-esejfy-burgundy" />
+                        Doprava zdarma
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="mt-2 text-center">
+            <div className="mt-10 text-center">
               <Link
                 to={`/products?category=${categorySlug}`}
-                className="inline-flex items-center px-2 py-1 border border-esejfy-burgundy text-esejfy-burgundy hover:bg-esejfy-burgundy hover:text-white transition-colors duration-200 rounded text-xs font-medium"
+                className="btn-primary px-8 py-3"
               >
-                Zobrazit všechny produkty v této kategorii
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
+                <span>Zobrazit celý sortiment trezorů</span>
+                <ChevronRight size={18} className="ml-2" />
               </Link>
             </div>
           </div>

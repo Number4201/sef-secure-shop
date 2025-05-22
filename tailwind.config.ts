@@ -18,7 +18,47 @@ export default {
         "2xl": "1400px",
       },
     },
+    fontFamily: {
+      sans: ['Montserrat', 'system-ui', 'sans-serif'],
+      serif: ['Georgia', 'serif'],
+      mono: ['Menlo', 'Monaco', 'Courier New', 'monospace'],
+      heading: ['Montserrat', 'system-ui', 'sans-serif'],
+      body: ['Open Sans', 'system-ui', 'sans-serif'],
+    },
     extend: {
+      typography: {
+        DEFAULT: {
+          css: {
+            maxWidth: '65ch',
+            color: 'var(--foreground)',
+            h1: {
+              fontWeight: '700',
+              fontFamily: 'Montserrat, system-ui, sans-serif',
+            },
+            h2: {
+              fontWeight: '600',
+              fontFamily: 'Montserrat, system-ui, sans-serif',
+            },
+            h3: {
+              fontWeight: '600',
+              fontFamily: 'Montserrat, system-ui, sans-serif',
+            },
+            h4: {
+              fontWeight: '600',
+              fontFamily: 'Montserrat, system-ui, sans-serif',
+            },
+            p: {
+              fontFamily: 'Open Sans, system-ui, sans-serif',
+            },
+            a: {
+              color: 'var(--primary)',
+              '&:hover': {
+                color: 'var(--primary)',
+              },
+            },
+          },
+        },
+      },
       colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -64,18 +104,32 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				esejfy: {
-					burgundy: '#8A1538', // Keeping original burgundy color
-					navy: '#1A2642', // Slightly adjusted navy for better security feeling
-					gray: '#333842',  // Refined dark gray
+					burgundy: '#8A1538', // Primary brand color - burgundy
+					burgundyLight: '#B01C4A', // Lighter burgundy for hover states
+					burgundyDark: '#6A1029', // Darker burgundy for active states
+					navy: '#1A2642', // Security-focused navy blue
+					navyLight: '#2A3A5F', // Lighter navy for hover states
+					gray: '#333842', // Refined dark gray
+					grayLight: '#4A5060', // Lighter gray for hover states
 					lightgray: '#EAEAEC', // Light gray for backgrounds
-					blue: '#3C6E91',  // Trust-inspiring blue
-					steel: '#5D6E81',  // Steel blue-gray for accents
+					offWhite: '#F8F9FA', // Off-white for card backgrounds
+					blue: '#3C6E91', // Trust-inspiring blue
+					blueLight: '#4D89B8', // Lighter blue for hover states
+					steel: '#5D6E81', // Steel blue-gray for accents
+					steelLight: '#7A8A9A', // Lighter steel for hover states
 					platinum: '#E6E7E9', // Very light gray that works with burgundy
+					gold: '#D4AF37', // Gold for premium/certification indicators
+					success: '#2E7D32', // Success green
+					warning: '#ED6C02', // Warning orange
+					error: '#D32F2F', // Error red
+					info: '#0288D1', // Info blue
 					// Dark theme colors
 					dark: {
-						primary: '#171928',     // Darker primary background
-						secondary: '#212333',   // Dark secondary background
-						accent: '#2D3043',      // Dark accent color
+						primary: '#171928', // Darker primary background
+						secondary: '#212333', // Dark secondary background
+						accent: '#2D3043', // Dark accent color
+						card: '#1E1F2E', // Dark card background
+						border: '#2A2C3E', // Dark border color
 					}
 				}
 			},
